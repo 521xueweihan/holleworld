@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Holleworld</a>
+        </div>
+        <!--<div id="navbar" class="navbar-collapse collapse">-->
+          <!--<form class="navbar-form navbar-right">-->
+            <!--<div class="form-group">-->
+              <!--<input type="text" placeholder="Email" class="form-control">-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<input type="password" placeholder="Password" class="form-control">-->
+            <!--</div>-->
+            <!--<button type="submit" class="btn btn-success">Sign in</button>-->
+          <!--</form>-->
+        <!--</div>&lt;!&ndash;/.navbar-collapse &ndash;&gt;-->
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>欢迎</h1>
+          <p>这个网站叫做‘holleworld’,对的你没看错是不是长的很像‘helloworld‘。
+          关于这个网站的来源，是因为我是一个英语很渣的程序员，在学习编程技术的过程中，我发现
+          学好英文很重要，因为需要看英文文档。为了提高我的英语水平，我打算实现像在kindle上看
+          英文内容的一个网站。</p>
+
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">更多 &raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>功能1</h2>
+          <p>实现kindle看英文内容一样的效果，可以立即翻译选中的内容。实现方法很简单，
+              调用了有道词典的api。效果如下：</p>
+          <img src="/static/image/demo.png" width="350" height="231">
+          <p><a class="btn btn-default" href={{ demo1 }} role="button">看看效果 &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>功能2</h2>
+            <p>抓取国外流行的一些it类资讯网站，把相关内容在本站显示，同时可以实现选词翻译。</p>
+          <p><a class="btn btn-default" href={{ demo2 }} role="button">别点否则后果自负！ &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2>功能3</h2>
+            <p>这个功能高级了：用户可以登录，处于登录状态下，会记录查询过的单词。预期实现的效果
+            就像网游中不同品级的装备颜色不一样。查询过很多次的单词，颜色就是‘暗金色’，我认为
+            这样有利于记住单词！<strong>（都说高级功能，不赞助我要写我怎么有动力写呢？）</strong></strong></p>
+          <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2015</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+
+</html>
