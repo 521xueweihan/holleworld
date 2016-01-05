@@ -23,15 +23,14 @@ class TalkHandler(RequestHandler):
     def get(self):
         if not self.get_cookie('username'):
             self.redirect('/login')
-        username = self.get_cookie('username')
-
-        welcome = u"""欢迎%s来到雪B聊天室
-                             一切都是那么简单！""" % username
-        self.render('talk.html', **{'welcome': welcome})
+        else:
+            username = self.get_cookie('username')
+            welcome = u"""欢迎%s来到雪B聊天室""" % username.decode('utf-8')
+            self.render('talk.html', **{'welcome': welcome})
 
     def post(self):
         username = self.get_cookie('username')
-        message = u'%s 说:%s' % (username, self.get_argument('message'))
+        message = u'%s 说:%s' % (username.decode('utf-8'), self.get_argument('message'))
         MSG[username] = message
         self.write(message)
 
@@ -41,6 +40,5 @@ class MessageHandler(RequestHandler):
         if MSG:
             if self.get_cookie('username') not in MSG.keys():
                 self.write(MSG.values()[0])
-                print 1
                 MSG.clear()
 

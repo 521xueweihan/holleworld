@@ -8,8 +8,7 @@ __author__  =  'XueWeihan'
 import os
 from tornado import ioloop
 from tornado.web import StaticFileHandler
-from tornado.web import RequestHandler, Application
-from tornado.options import define, options
+from tornado.web import Application
 
 from app.chat_room import LoginHandler, TalkHandler, MessageHandler
 from app.index import MainHandler
@@ -33,6 +32,5 @@ def make_app():
 if __name__ == "__main__":
     app = make_app()
     app.listen(8000)
-    options.logging = "debug"
 
     ioloop.IOLoop.current().start()

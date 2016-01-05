@@ -5,8 +5,6 @@ __mtime__   =  '15/12/29'
 __author__  =  'XueWeihan'
 
 """
-import os
-
 from tornado.web import RequestHandler
 
 class MainHandler(RequestHandler):
