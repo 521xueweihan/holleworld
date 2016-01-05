@@ -7,7 +7,7 @@ __author__  =  'XueWeihan'
 """
 from tornado.web import RequestHandler
 
-MSG = set()
+MSG = {}
 
 class LoginHandler(RequestHandler):
     def get(self):
@@ -32,13 +32,15 @@ class TalkHandler(RequestHandler):
     def post(self):
         username = self.get_cookie('username')
         message = u'%s 说:%s' % (username, self.get_argument('message'))
-        MSG.add(message)
+        MSG[username] = message
         self.write(message)
 
 
 class MessageHandler(RequestHandler):
     def get(self):
         if MSG:
-            self.write(MSG.pop())
-            print 1
+            if self.get_cookie('username') not in MSG.keys():
+                self.write(MSG.values()[0])
+                print 1
+                MSG.clear()
 

@@ -42,18 +42,18 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/static/js/bootstrap.min.js"></script>
     <script>
+
         function get_new_message(){
              $.get("/message", function(data){
                 if (data != ""){
-                    alert(data)
-                    $("#show_message").append(data + "<br>")
+                    $("#show_message").append("<font size=\"3\" color=\"red\">" +data+ "</font>" + "<br>")
                 }
             }
             )
         }
-        setInterval(get_new_message, 1);
-        $(document).ready(function(){
 
+        $(document).ready(function(){
+            setInterval(get_new_message, 1);
             $("button").click(function(){
                 $.post("/talk",
                 {
