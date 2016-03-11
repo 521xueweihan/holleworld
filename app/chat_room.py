@@ -1,10 +1,10 @@
-# coding: utf-8
-"""
-__title__   =  '雪B最NB'
-__mtime__   =  '16/1/5'
-__author__  =  'XueWeihan'
-
-"""
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   XueWeiHan
+#   E-mail  :   595666367@qq.com
+#   Date    :   16/3/11 下午3:54
+#   Desc    :   聊天室
 from tornado.web import RequestHandler
 
 MSG = {}
