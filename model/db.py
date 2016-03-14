@@ -11,7 +11,7 @@
 """
 
 import time
-import uuid
+import random
 import functools
 import threading
 import logging
@@ -61,16 +61,13 @@ class Dict(dict):
         self[key] = value
 
 
-def next_id(t=None):
+def next_id():
     """
-    根据时间戳创建id
-    Return next id as 50-char string.
-    Args:
-        t: unix timestamp, default to None and using time.time().
+    使用random函数随机生成一个长度为10的纯数字字符串
     """
-    if t is None:
-        t = time.time()
-    return '%015d%s000' % (int(t * 1000), uuid.uuid4().hex)
+    chars = '0123456789'
+    uid = random.sample(chars, 10)
+    return ''.join(uid)
 
 
 def _profiling(start, sql=''):

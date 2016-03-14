@@ -10,7 +10,9 @@
 Database operation module. This module is independent with web module.
 '''
 
-import time, logging
+import time
+import logging
+import datetime
 
 import db
 
@@ -72,6 +74,14 @@ class FloatField(Field):
         if not 'ddl' in kw:
             kw['ddl'] = 'real'
         super(FloatField, self).__init__(**kw)
+
+
+class TimeField(Field):
+
+    def __init__(self, **kw):
+        if not 'default' in kw:
+            kw['default'] = datetime.datetime.now()
+        super(TimeField, self).__init__(**kw)
 
 
 class BooleanField(Field):

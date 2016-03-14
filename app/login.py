@@ -5,11 +5,15 @@
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/3/14 下午5:37
 #   Desc    :   登陆
-from model import models
-
 from tornado.web import RequestHandler
 
+from model import db, models
+
+
 class TestLoginHandler(RequestHandler):
+    """
+    登陆
+    """
     def get(self):
         self.render('test_login.html')
 
@@ -17,19 +21,30 @@ class TestLoginHandler(RequestHandler):
         email = self.get_argument('email')
         password = self.get_argument('password')
         user = models.User.find_first('where email=?', email)
-        if user is None:
-            self.write_error(333)
+        if user.password == password:
+            self.render('status.html', message=u'登陆成功！')
+        else:
+            self.render('status.html', message=u'登陆失败！')
 
 
 class SignInHandler(RequestHandler):
+    """
+    注册
+    """
     def get(self):
         ## TODO 验证session中的用户状态
+        print db.next_id()
         self.render('sign_in.html')
 
     def post(self):
-        email=self.get_argument('email')
+        email = self.get_argument('email')
         password = self.get_argument('password')
         nickname = self.get_argument('nickname')
-        u = models.User(uid=123345, email=email, nickname=nickname, password=password)
-        u.insert()
-        self.write(u'200')
+        u = models.User(email=email, nickname=nickname, password=password)
+        try:
+            u.insert()
+        except:
+            self.render('status.html', message=u'注册失败！')
+
+
+        self.render('status.html', message=u'注册成功！')
