@@ -14,7 +14,7 @@ configs = {
         'port': 3306,
         'user': 'test',
         'password': '521521',
-        'database': 'test'
+        'database': 'holleworld'
     },
     'tornado_setting':{
         'static_path': os.path.join(os.path.dirname(__file__), 'static'),

@@ -7,6 +7,7 @@
 #   Desc    :   首页
 from tornado.web import RequestHandler
 
+
 class MainHandler(RequestHandler):
     def get(self):
         static_url = {'demo1': '/static/tornado/index.html',
