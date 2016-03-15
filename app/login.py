@@ -10,13 +10,10 @@ from tornado.web import RequestHandler
 from model import db, models
 
 
-class TestLoginHandler(RequestHandler):
+class LoginHandler(RequestHandler):
     """
     登陆
     """
-    def get(self):
-        self.render('test_login.html')
-
     def post(self):
         email = self.get_argument('email')
         password = self.get_argument('password')
@@ -27,14 +24,13 @@ class TestLoginHandler(RequestHandler):
             self.render('status.html', message=u'登陆失败！')
 
 
-class SignInHandler(RequestHandler):
+class RegisterHandler(RequestHandler):
     """
     注册
     """
     def get(self):
         ## TODO 验证session中的用户状态
-        print db.next_id()
-        self.render('sign_in.html')
+        self.render('register.html')
 
     def post(self):
         email = self.get_argument('email')

@@ -13,7 +13,7 @@ from tornado.web import Application
 
 from model import db
 from config import configs
-from app.chat_room import LoginHandler, TalkHandler, MessageHandler
+from app.chat_room import TalkHandler, MessageHandler
 from app.index import MainHandler
 from app import login
 
@@ -27,10 +27,9 @@ def make_app():
     return Application([
         (r'/', MainHandler),
         (r'/talk', TalkHandler),
-        (r'/login', LoginHandler),
         (r'/message', MessageHandler),
-        (r'/test_login', login.TestLoginHandler),
-        (r'/sign', login.SignInHandler)
+        (r'/login', login.LoginHandler),
+        (r'/sign', login.RegisterHandler)
     ], StaticFileHandler, **configs['tornado_setting'])
 
 if __name__ == "__main__":

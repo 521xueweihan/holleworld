@@ -9,14 +9,14 @@ from tornado.web import RequestHandler
 
 MSG = {}
 
-class LoginHandler(RequestHandler):
-    def get(self):
-        self.render('login.html')
-
-    def post(self):
-        username = self.get_argument('username')
-        self.set_cookie('username', username)
-        self.redirect('/talk')
+# class LoginHandler(RequestHandler):
+#     def get(self):
+#         self.render('login.html')
+#
+#     def post(self):
+#         username = self.get_argument('username')
+#         self.set_cookie('username', username)
+#         self.redirect('/talk')
 
 
 class TalkHandler(RequestHandler):
