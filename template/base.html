@@ -26,8 +26,11 @@
           </button>
           <a class="navbar-brand" href="/">Holleworld</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" action="/login" method="post">
+        {% if current_user %}
+            <div class="navbar-right" href="/" style="color: red">{{ current_user['nickname'] }}</div>
+        {% end %}
+        <div id="navbar" class="navbar-collapse collapse" >
+          <form class="navbar-form navbar-right" action="/" method="post">
             <div class="form-group">
               <input type="text" name="email" placeholder="Email" class="form-control">
             </div>
@@ -36,6 +39,7 @@
             </div>
             <button type="submit" class="btn btn-success">登陆</button>
             <a href="/sign"><button type="button" class="btn btn-primary">注册</button></a>
+            <a href="/logout"><button type="button" class="btn btn-primary">注销</button></a>
           </form>
         </div><!--/.navbar-collapse -->
       </div>

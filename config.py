@@ -6,6 +6,14 @@
 #   Date    :   16/3/11 下午3:54
 #   Desc    :   配置文件
 import os
+# debug模式
+DEBUG = True
+
+# 监听的端口
+PORTS = 8000
+
+# 盐
+SALT = '54xueweihan5zuiNB'
 
 
 configs = {
@@ -19,7 +27,8 @@ configs = {
     'tornado_setting':{
         'static_path': os.path.join(os.path.dirname(__file__), 'static'),
         'template_path': os.path.join(os.path.dirname(__file__), 'template'),
-        'debug': True
+        'debug': True,
+        'cookie_secret': 'XuEwEiHaN'
     },
     'session': {
         'secret': 'XuEwEiHaN'
