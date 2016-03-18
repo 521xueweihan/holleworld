@@ -24,7 +24,7 @@ class BaseHandler(RequestHandler):
         elif (self.request.path not in ['/']) and (not self.session):
             self.redirect('/')
         elif self.session:
-            self.current_user = json.loads(self.session)
+            self.current_user = self.get_user
 
     @property
     def __hashids(self):
@@ -36,6 +36,10 @@ class BaseHandler(RequestHandler):
 
     def _unwrap_id(self, warp_id):
         return self.__hashids.decode(warp_id)[0]
+
+    @property
+    def get_user(self):
+        return json.loads(self.session)
 
     @property
     def session(self):

@@ -22,7 +22,8 @@ class MainHandler(BaseHandler):
                                       email, password)
         if user:
             self.session = {'uid': user.uid,
-                            'nickname': user.nickname}
+                            'nickname': user.nickname,
+                            'admin': user.admin}
             self.redirect('/')
         else:
             self.render('status.html', message=u'登陆失败！')

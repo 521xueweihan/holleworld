@@ -32,7 +32,8 @@ def make_app():
         (r'/message', MessageHandler),
         (r'/logout', login.LogoutHandler),
         (r'/sign', login.RegisterHandler),
-        (r'/news', news.NewsHandler)
+        (r'/news', news.NewsHandler),
+        (r'/news_edit', news.NewsEditHandler)
     ], StaticFileHandler, **configs['tornado_setting'])
 
 if __name__ == "__main__":
