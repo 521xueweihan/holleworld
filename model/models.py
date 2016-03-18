@@ -7,15 +7,25 @@
 #   Desc    :   ORM对象
 
 from db import next_id
-from orm import Model, StringField, TimeField, IntegerField
+from orm import Model, StringField, TimeField, IntegerField, TextField
 
 
 class User(Model):
     __table__ = 'user'
 
     id = IntegerField(primary_key=True, ddl='bigint(20)')
-    uid = IntegerField(default=next_id(), ddl='bigint(20)')
+    uid = IntegerField(default=next_id(), updatable=False, ddl='bigint(20)')
     email = StringField(ddl='varchar(50)')
     nickname = StringField(ddl='varchar(50)')
     password = StringField(ddl='varchar(6)')
+    create_time = TimeField()
+
+
+class News(Model):
+    __table__ = 'news'
+
+    id = IntegerField(primary_key=True, ddl='bigint(20)')
+    title = StringField(ddl='varchar(50)')
+    content = TextField()
+    update_time = TimeField()
     create_time = TimeField()

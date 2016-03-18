@@ -12,7 +12,7 @@ from model import models
 class MainHandler(BaseHandler):
     def get(self):
         static_url = {'demo1': '/static/tornado/index.html',
-                      'demo2': '/static/image/fun.png'}
+                      'demo2': '/news'}
         self.render('home.html', **static_url)
 
     def post(self):

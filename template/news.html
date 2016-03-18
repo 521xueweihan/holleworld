@@ -6,5 +6,10 @@
 </head>
 <body>
 <h1>News!!</h1>
+
+{% for news in news_list %}
+<h3>{{ news.title }}</h3>
+<p>{{ news.content }}</p>
+{% end %}
 </body>
 </html>
