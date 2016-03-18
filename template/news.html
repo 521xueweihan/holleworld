@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<h1>News!!</h1>
+{% extends "base.html" %}
+{% block title %}首页{% end %}
+{% block content %}
+{% autoescape None %}
+<div class="container">
+    {% for news in news_list %}
+    <div class="blog-post">
+        <h2 class="blog-post-title">{{ news.title }}</h2>
+        <p>{{ news.content }}</p>
+    </div><!-- /.blog-post -->
+    {% end %}
 
-{% for news in news_list %}
-<h3>{{ news.title }}</h3>
-<p>{{ news.content }}</p>
+    <a href="/news_edit">发布新闻！</a>
+</div><!-- /.container -->
+
 {% end %}
-
-
-<a href="/news_edit">发布新闻！</a>
-</body>
-</html>

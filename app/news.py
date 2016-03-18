@@ -7,6 +7,8 @@
 #   Desc    :   news模块
 import datetime
 
+import markdown2
+
 from model import models
 from app import BaseHandler
 
@@ -16,6 +18,8 @@ class NewsHandler(BaseHandler):
     """
     def get(self):
         news_list = models.News.find_all()
+        for new in news_list:
+            new.content = markdown2.markdown(new.content)
         self.render('news.html', news_list=news_list)
 
 
@@ -26,10 +30,9 @@ class NewsEditHandler(BaseHandler):
         self.render('news_edit.html')
 
     def post(self):
-
         if not self.get_user['admin']:
             self.render('status.html', message=u'对不起你没有权限！')
-            self.finish()
+            return
         title = self.get_argument('title')
         content = self.get_argument('content')
         create_time = datetime.datetime.now()
