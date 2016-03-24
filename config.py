@@ -15,6 +15,11 @@ PORTS = 8000
 # 盐
 SALT = '54xueweihan5zuiNB'
 
+# 翻译key
+YouDao_Key = {
+    'key': 1589417428,
+    'keyfrom': 'holleworld'
+}
 
 configs = {
     'db': {

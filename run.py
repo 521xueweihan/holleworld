@@ -14,8 +14,7 @@ from tornado.log import enable_pretty_logging
 from model import db
 from config import configs, PORTS, DEBUG
 from app.chat_room import TalkHandler, MessageHandler
-from app import index
-from app import news
+from app import index, news, translate
 
 # 设置logging级别
 define("debugging", default=DEBUG, type=bool, help="Toggle debugging mode")
@@ -32,6 +31,7 @@ def make_app():
         (r'/logout', index.LogoutHandler),
         (r'/news', news.NewsHandler),
         (r'/news_edit', news.NewsEditHandler),
+        (r'/translate', translate.TranslateHandler),
         (r'/talk', TalkHandler),
         (r'/message', MessageHandler),
     ], StaticFileHandler, **configs['tornado_setting'])

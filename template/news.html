@@ -7,10 +7,61 @@
     <div class="blog-post">
         <h2 class="blog-post-title">{{ news.title }}</h2>
         <p>{{ news.content }}</p>
+        <div id="translation"></div>
     </div><!-- /.blog-post -->
     {% end %}
 
     <a href="/news_edit">发布新闻！</a>
 </div><!-- /.container -->
+{% end %}
 
+{% block include_js %}
+<script>
+function show_tanslation(data_list){
+    alert(data_list[0])
+    for(var i =0; i<data_list.length; i++){
+        alert(data_list[i]);
+        $("#translation").append(data_list[i]);
+    }
+}
+// 根据选择的关键字获取翻译
+function get_translation(keyword){
+     $.get("/translate", {keyword: keyword}, function(data){
+        var data_list = [];
+        var translation = data.data.translation;
+        data_list.push(translation);
+        var explains = data.data.basic.explains;
+        for (var i = 0;i < explains.length; i++){
+            data_list.push(explains[i]);
+        }
+
+        for(var i =0; i<data_list.length; i++){
+            $("#translation").append(data_list[i]);
+        }
+    })
+}
+
+// 获取鼠标选中的内容
+var funcGetSelectText = function(){
+    var txt = '';
+    if(document.selection){
+        txt = document.selection.createRange().text;//ie
+    }else{
+        txt = document.getSelection();
+    }
+    return txt.toString();
+}
+
+var container = document;
+
+// 鼠标选中事件做的操作
+    container.onmouseup = function(){
+    var txt = funcGetSelectText();
+    if(txt)
+    {
+        var data = get_translation(txt);
+        show_tanslation(data);
+    }
+}
+</script>
 {% end %}
