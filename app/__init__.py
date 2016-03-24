@@ -7,8 +7,10 @@
 #   Desc    :   Handler的基类
 import hashids
 import json
+import datetime
+import decimal
 
-from tornado.web import RequestHandler
+from tornado.web import RequestHandler, Finish
 
 from config import SALT
 
@@ -54,3 +56,33 @@ class BaseHandler(RequestHandler):
     @session.deleter
     def session(self):
         self.clear_cookie(self._SESSION_COOKIE_KEY)
+
+    def conv_valid_json(self, data):
+        """ 将一些数据改为合法的 JSON, 比如 日期
+        """
+        if isinstance(data, dict):
+            for key in data:
+                data[key] = self.conv_valid_json(data[key])
+
+        if isinstance(data, (list, tuple)):
+            data = [self.conv_valid_json(x) for x in data]
+
+        if isinstance(data, datetime.datetime):
+            data = data.strftime("%Y-%m-%d %H:%M:%S")
+
+        if isinstance(data, datetime.date):
+            data = data.strftime("%Y-%m-%d")
+
+        if isinstance(data, decimal.Decimal):
+            data = str(data)
+
+        return data
+
+    def write_success(self, data=None):
+        self.write({"success": True, "code": 200, "data": self.conv_valid_json(data)})
+
+    def write_fail(self, **extra):
+        """ 抛出结束异常来确保代码不会继续执行 """
+        extra.update({"success": False})
+        self.write(extra)
+        raise Finish  # 确保代码不会在返回错误后继续执行
