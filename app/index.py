@@ -47,6 +47,7 @@ class RegisterHandler(BaseHandler):
         self.render('register.html')
 
     def post(self):
+        ## TODO 已经注册过的邮箱不能重复注册
         email = self.get_argument('email')
         password = self.get_argument('password')
         nickname = self.get_argument('nickname')
