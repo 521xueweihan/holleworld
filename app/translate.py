@@ -57,6 +57,7 @@ def save_word(uid, query_word, data):
     if word:
         word = models.Words.get(word.id)
         word.count += 1
+        word.update_time = datetime.datetime.now()
         word.update()
         logging.info('{}查询次数＋1'.format(query_word))
         data['count'] = word.count

@@ -17,13 +17,15 @@
 
 {% block include_js %}
 <script>
-function show_tanslation(data_list){
-    alert(data_list[0])
-    for(var i =0; i<data_list.length; i++){
-        alert(data_list[i]);
-        $("#translation").append(data_list[i]);
-    }
-}
+//这个方法有问题，放在这里有面再改
+//function show_tanslation(data_list){
+//    alert(data_list[0])
+//    for(var i =0; i<data_list.length; i++){
+//        alert(data_list[i]);
+//        $("#translation").append(data_list[i]);
+//    }
+//}
+
 // 根据选择的关键字获取翻译
 function get_translation(keyword){
      $.get("/translate", {keyword: keyword}, function(data){
@@ -59,8 +61,7 @@ var container = document;
     var txt = funcGetSelectText();
     if(txt)
     {
-        var data = get_translation(txt);
-        show_tanslation(data);
+        get_translation(txt);
     }
 }
 </script>
