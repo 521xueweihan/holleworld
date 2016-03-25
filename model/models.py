@@ -13,7 +13,7 @@ from orm import Model, StringField, TimeField, IntegerField, TextField
 class User(Model):
     __table__ = 'user'
 
-    id = IntegerField(primary_key=True, ddl='bigint(20)')
+    id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
     uid = IntegerField(default=next_id(), updatable=False, ddl='bigint(20)')
     email = StringField(ddl='varchar(50)')
     nickname = StringField(ddl='varchar(50)')
@@ -25,8 +25,19 @@ class User(Model):
 class News(Model):
     __table__ = 'news'
 
-    id = IntegerField(primary_key=True, ddl='bigint(20)')
+    id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
     title = StringField(ddl='varchar(50)')
     content = TextField()
+    update_time = TimeField()
+    create_time = TimeField()
+
+
+class Words(Model):
+    __table__ = 'words'
+
+    id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
+    uid = IntegerField(updatable=False, ddl='bigint(20)')
+    count = IntegerField(ddl='bigint(20)', default=1)
+    word = StringField(ddl='varchar(50)')
     update_time = TimeField()
     create_time = TimeField()

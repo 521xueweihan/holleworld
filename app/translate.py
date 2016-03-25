@@ -7,10 +7,12 @@
 #   Desc    :   请求有道翻译api实现翻译功能
 import json
 import logging
+import datetime
 
 from tornado.httpclient import HTTPClient
 from tornado import log
 
+from model import models
 from app import BaseHandler
 from config import YouDao_Key
 
@@ -34,15 +36,36 @@ class YouDao(object):
     def api(self):
         return self.url+_FORMAT.format(keyfrom=self.keyfrom, key=self.key)
 
-    def get_translation(self, q):
+    def translation(self, q):
         try:
             logging.info('使用‘有道’，翻译：{}'.format(q))
             response = HTTPClient().fetch(self.api % q)
         except Exception:
-            logging.error('网络出错！'.format(q))
+            logging.error('翻译出错！'.format(q))
             return None
         data = response.body
         return data
+
+
+def save_word(uid, query_word, data):
+    """
+    把查询的单词存到数据库中，如果数据库已经有了就把查询次数＋1
+    :param uid: 用户id
+    :param query_word: 查询的单词
+    """
+    word = models.Words.find_first('where uid=? and word=?', uid, query_word)
+    if word:
+        word = models.Words.get(word.id)
+        word.count += 1
+        word.update()
+        logging.info('{}查询次数＋1'.format(query_word))
+        data['count'] = word.count
+        return
+
+    models.Words(uid=uid, word=query_word,
+                 create_time=datetime.datetime.now()).insert()
+    data['count'] = 1
+    logging.info("存储单词:{},成功！".format(query_word))
 
 
 class TranslateHandler(BaseHandler):
@@ -52,7 +75,7 @@ class TranslateHandler(BaseHandler):
             self.write_fail(message=u'没有参数！')
 
         youdao = YouDao(**YouDao_Key)
-        data = youdao.get_translation(keyword)
+        data = youdao.translation(keyword)
 
         if data is None:
             return self.write_fail(message=u'选择的翻译内容错误！')
@@ -63,6 +86,11 @@ class TranslateHandler(BaseHandler):
         if data['errorCode'] in YouDao_ERROR.keys():
             logging.info('{}！'.format(YouDao_ERROR[data['errorCode']]))
             return self.write_fail(message=YouDao_ERROR[data['errorCode']])
+
+        # 只存储单词，不存储词组等其他形式
+        if 'basic' in data.keys():
+            save_word(self.get_user['uid'], keyword, data)
+
         return self.write_success(data)
 
 if __name__ == "__main__":
