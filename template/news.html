@@ -2,12 +2,18 @@
 {% block title %}新闻{% end %}
 {% block content %}
 {% autoescape None %}
+<style type="text/css">
+    #translation {position:absolute;width:80px;height:80px;background-color:gold;display:none;}
+</style>
+
 <div class="container">
     {% for news in news_list %}
     <div class="blog-post">
         <h2 class="blog-post-title">{{ news.title }}</h2>
         <p>{{ news.content }}</p>
-        <div id="translation"></div>
+        <div id="translation">
+            <p></p>
+        </div>
     </div><!-- /.blog-post -->
     {% end %}
 
@@ -17,18 +23,9 @@
 
 {% block include_js %}
 <script>
-//这个方法有问题，放在这里有面再改
-//function show_tanslation(data_list){
-//    alert(data_list[0])
-//    for(var i =0; i<data_list.length; i++){
-//        alert(data_list[i]);
-//        $("#translation").append(data_list[i]);
-//    }
-//}
-
 // 根据选择的关键字获取翻译
 function get_translation(keyword){
-     $.get("/translate", {keyword: keyword}, function(data){
+    $.get("/translate", {keyword: keyword}, function(data){
         var data_list = [];
         var translation = data.data.translation;
         data_list.push(translation);
@@ -37,32 +34,25 @@ function get_translation(keyword){
             data_list.push(explains[i]);
         }
 
-        for(var i =0; i<data_list.length; i++){
-            $("#translation").append(data_list[i]);
-        }
+        $("#translation").html(data_list.join(''));
+        $("#translation").css("display","block");
     })
 }
 
-// 获取鼠标选中的内容
-var funcGetSelectText = function(){
-    var txt = '';
-    if(document.selection){
-        txt = document.selection.createRange().text;//ie
-    }else{
-        txt = document.getSelection();
-    }
-    return txt.toString();
-}
+$(document).ready(function(){
+// 监听鼠标放开的操作，如果鼠标放时选择了内容则请求翻译；如果没有内容不请求翻译，同时不显示翻译框
+    $(this).mouseup(function(e){
+        $("#translation").css("left", e.pageX-30); // 获取鼠标的位置
+        $("#translation").css("top", e.pageY+10);  // 用于结果的位置
+        var txt = document.getSelection().toString();  // 获取选择的内容
 
-var container = document;
-
-// 鼠标选中事件做的操作
-    container.onmouseup = function(){
-    var txt = funcGetSelectText();
-    if(txt)
-    {
-        get_translation(txt);
-    }
-}
+        if(txt){
+            get_translation(txt);  // 获取翻译结果
+        }
+        else{
+            $("#translation").css("display","none");  // 隐藏翻译框
+        }
+    })
+})
 </script>
 {% end %}
