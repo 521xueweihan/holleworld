@@ -26,7 +26,7 @@ class News(Model):
     __table__ = 'news'
 
     id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
-    title = StringField(ddl='varchar(50)')
+    title = StringField(ddl='varchar(500)')
     content = TextField()
     update_time = TimeField()
     create_time = TimeField()
