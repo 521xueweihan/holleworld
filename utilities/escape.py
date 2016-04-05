@@ -7,9 +7,6 @@
 #   Desc    :   HTML转义
 
 
-import re
-
-
 def code_unescape(s):
     """
     代码块中的内容不转义

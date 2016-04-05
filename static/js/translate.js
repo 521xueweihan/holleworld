@@ -12,11 +12,31 @@ function get_translation(keyword){
         for (var i = 0;i < explains.length; i++){
             data_list.push(explains[i]);
         }
-
         $("#translation").html(data_list.join(''));
         $("#translation").css("display","block");
+        change_color(keyword, data.data.count);
     })
+
 }
+
+// 改变颜色
+function change_color(keyword, count){
+
+    var span_id = '.' + keyword;
+    if(count <=3){
+        $(span_id).css("color","#40FF00");
+    }
+    else if (count <= 5){
+        $(span_id).css("color", "#0000FF");
+    }
+    else if (count <= 10){
+        $(span_id).css("color", "#8904B1");
+    }
+    else{
+        $(span_id).css("color", "#FFBF00");
+    }
+}
+
 
 $(document).ready(function(){
 // 监听鼠标放开的操作，如果鼠标放时选择了内容则请求翻译；如果没有内容不请求翻译，同时不显示翻译框

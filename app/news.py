@@ -12,7 +12,7 @@ import markdown2
 
 from model import models
 from app import BaseHandler
-from utilities import escape
+from utilities import escape, tool
 
 
 class NewsHandler(BaseHandler):
@@ -36,15 +36,21 @@ class NewsEditHandler(BaseHandler):
 
         title = self.get_argument('title')
         content = self.get_argument('content')
+        new_content = []
 
-        # markdown转成html
-        title = escape.html_escape(unicode(markdown2.markdown(title)))
+        # markdown转成html并转义
+        title = unicode(markdown2.markdown(escape.html_escape(title)))
         content = unicode(markdown2.markdown(escape.html_escape(content),
                                              extras=['fenced-code-blocks']))
 
         # 反转义代码块中的"&amp;"
         m = re.compile('\<pre\>[\s\S]*\<\/pre\>')
         content = m.sub(escape.code_unescape, content)
+
+        for span_content in content.split(' '):
+            new_content.append(tool.insert_span(span_content))
+
+        content = ' '.join(new_content)
 
         create_time = datetime.datetime.now()
 
