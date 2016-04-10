@@ -41,3 +41,15 @@ class Words(Model):
     word = StringField(ddl='varchar(50)')
     update_time = TimeField()
     create_time = TimeField()
+
+
+class Share(Model):
+    __table__ = 'share'
+
+    id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
+    uid = IntegerField(updatable=False, ddl='bigint(20)')
+    zh_title = StringField(ddl='varchar(50)')
+    en_title = StringField(ddl='varchar(50)')
+    url = StringField(ddl='varchar(50)')
+    update_time = TimeField()
+    create_time = TimeField()

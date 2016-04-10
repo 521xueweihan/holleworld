@@ -29,14 +29,35 @@ class BaseHandler(RequestHandler):
             self.current_user = self.get_user
 
     @property
+    def now(self):
+        """
+        返回当前时间方法
+        :return:方法
+        """
+        return datetime.datetime.now
+
+    @property
     def __hashids(self):
+        """
+        返回Hashids对象
+        """
         return hashids.Hashids(SALT, min_length=16,
                                alphabet='abcdefghijklmnopqrstuvwxyz1234567890')
 
     def _warp_id(self, _id):
+        """
+        加密id
+        :param _id:真实的id
+        :return:加盐的id
+        """
         return self.__hashids.encode(_id)
 
     def _unwrap_id(self, warp_id):
+        """
+        解密id
+        :param warp_id:加密的id
+        :return:真实的id
+        """
         return self.__hashids.decode(warp_id)[0]
 
     @property

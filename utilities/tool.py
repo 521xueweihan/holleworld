@@ -5,6 +5,7 @@
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/4/5 下午10:56
 #   Desc    :   一些工具方法
+import re
 
 
 def insert_span(s):
@@ -21,3 +22,17 @@ def insert_span(s):
         return '<span class='+s+'>'+s+'</span>'
     #
     return ''
+
+
+def re_url(s):
+    """
+    利用正则匹配url
+    符合->返回(不含参数：'?arg=xxx')的url
+    不符合->返回None
+    """
+    _re = re.compile(r'(http|https)+://[^\s?]*')
+    re_result = _re.match(s)
+    if re_result:
+        return re_result.group()
+    else:
+        return None

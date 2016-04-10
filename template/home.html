@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}首页{% end %}
 {% block content %}
-    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
             <h1>欢迎</h1>
@@ -26,14 +25,16 @@
             </div>
             <div class="col-md-4">
                 <h2>功能2</h2>
-                <p>抓取国外流行的一些it类资讯网站，把相关内容在本站显示，同时可以实现选词翻译。</p>
+                <p>登陆状态下，用户可以发布优秀的英文文章，中文标题，英文标题，URL(为了安
+                    全自动替换掉url带的参数)
+                </p>
                 <p><a class="btn btn-default" href={{ demo2 }} role="button">看看效果 &raquo;</a></p>
             </div>
             <div class="col-md-4">
                 <h2>功能3</h2>
-                <p>这个功能高级了：用户可以登录，处于登录状态下，会记录查询过的单词。预期实现的效果
-                就像网游中不同品级的装备颜色不一样。查询过很多次的单词，颜色就是‘暗金色’，我认为
-                这样有利于记住单词！
+                <p>这个功能高级了：用户可以登录，处于登录状态下，自动翻译选中的内容。同时
+                    会记录查询过的单词。预期实现的效果就像网游中不同品级的装备颜色不一样。
+                    查询过很多次的单词，颜色就是‘暗金色’，我认为这样有利于记忆单词！
                 </p>
                 <p><a class="btn btn-default" href={{ demo3 }} role="button">看看效果 &raquo;</a></p>
 

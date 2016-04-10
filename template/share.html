@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+{% for share in share_list %}
+<li>
+    {{ share.en_title }}
+    {{ share.zh_title }}
+    <a href="{{ share.url }}"> {{ share.url }}</a>
+</li>
+{% end %}
+
+<div>
+    <form method="post" action="/share">
+    <label>URL：</label><input type="text" name="url"><br>
+    <label>英文标题：</label><input type="text" name="en_title"><br>
+    <label>中文标题：</label><input type="text" name="zh_title"><br>
+    <input type="submit">
+</form>
+</div>
+</body>
+</html>

@@ -12,8 +12,8 @@ from model import models
 class MainHandler(BaseHandler):
     def get(self):
         static_url = {'demo1': '/static/tornado/index.html',
-                      'demo2': '/news',
-                      'demo3': '/static/test_react/index.html'}
+                      'demo2': '/share',
+                      'demo3': '/news'}
         self.render('home.html', **static_url)
 
     def post(self):
