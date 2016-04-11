@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {% block title %}新闻{% end %}
+
+{% block jumbotron %}
+    <h2>功能3</h2>
+    <p>
+        用户处于登录状态下，自动翻译选中的内容。同时会记录查询过的单词。预期实现的效果就像网
+        游中不同品级的装备颜色不一样。查询过很多次的单词，颜色就是‘暗金色’，我认为这样有利于
+        记忆单词！
+    </p>
+{% end %}
+
 {% block content %}
 {% autoescape None %}
 <style type="text/css">
