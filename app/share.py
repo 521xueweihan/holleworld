@@ -27,3 +27,9 @@ class ShareHandler(BaseHandler):
             self.render('status.html', message='ok!')
         else:
             self.write_fail(message=u'参数错误')
+
+
+class PraiseHandler(BaseHandler):
+    def post(self, _id):
+        print models.Share.get(_id)
+

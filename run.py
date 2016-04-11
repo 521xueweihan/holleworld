@@ -33,6 +33,7 @@ def make_app():
         (r'/news_edit', news.NewsEditHandler),
         (r'/translate', translate.TranslateHandler),
         (r'/share', share.ShareHandler),
+        (r'/share/praise/(\w+)', share.PraiseHandler),
         (r'/talk', TalkHandler),
         (r'/message', MessageHandler),
     ], StaticFileHandler, **configs['tornado_setting'])

@@ -51,5 +51,6 @@ class Share(Model):
     zh_title = StringField(ddl='varchar(50)')
     en_title = StringField(ddl='varchar(50)')
     url = StringField(ddl='varchar(50)')
+    good = IntegerField(ddl='bigint(20)', default=0)
     update_time = TimeField()
     create_time = TimeField()

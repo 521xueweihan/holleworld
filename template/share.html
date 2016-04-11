@@ -1,26 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}技术外文分享{% end %}
 
-{% for share in share_list %}
-<li>
-    {{ share.en_title }}
-    {{ share.zh_title }}
-    <a href="{{ share.url }}"> {{ share.url }}</a>
-</li>
+{% block jumbotron %}
+    <h2>功能2</h2>
+    <p>
+        登陆状态下，用户可以发布优秀的英文文章，中文标题，英文标题，URL(为了安
+        全自动替换掉url带的参数)
+    </p>
 {% end %}
 
-<div>
-    <form method="post" action="/share">
-    <label>URL：</label><input type="text" name="url"><br>
-    <label>英文标题：</label><input type="text" name="en_title"><br>
-    <label>中文标题：</label><input type="text" name="zh_title"><br>
-    <input type="submit">
-</form>
-</div>
-</body>
-</html>
+{% block content %}
+
+    {% for share in share_list %}
+    <li>
+        {{ share.en_title }}
+        {{ share.zh_title }}
+        <a href="{{ share.url }}"> {{ share.url }}</a><span class="praise" url_data="{{ share.url }}">赞</span>
+    </li>
+    {% end %}
+
+    <div>
+        <form method="post" action="/share">
+            <label>URL：</label><input type="text" name="url"><br>
+            <label>英文标题：</label><input type="text" name="en_title"><br>
+            <label>中文标题：</label><input type="text" name="zh_title"><br>
+            <input type="submit">
+        </form>
+    </div>
+
+{% end %}
+{% block include_js %}
+<script>
+        $(".praise").click(function (){
+            var share_item = $(this)
+            var url = share_item.attr('url_data')
+            $.post("/share/praise", {keyword: keyword}, function(data){
+//            var data_list = [];
+//            var translation = data.data.translation;
+//            data_list.push(translation);
+//            var explains = data.data.basic.explains;
+//            for (var i = 0;i < explains.length; i++){
+//                data_list.push(explains[i]);
+//            }
+//            $("#translation").html(data_list.join(''));
+//            $("#translation").css("display","block");
+//            change_color(keyword, data.data.count);
+        })
+</script>
+{% end %}
