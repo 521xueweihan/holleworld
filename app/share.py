@@ -13,6 +13,8 @@ from utilities import tool
 class ShareHandler(BaseHandler):
     def get(self):
         share_list = models.Share.find_all()
+        for share in share_list:
+            share['id'] = self._warp_id(share['id'])
         self.render('share.html', share_list=share_list)
 
     def post(self):
@@ -30,6 +32,14 @@ class ShareHandler(BaseHandler):
 
 
 class PraiseHandler(BaseHandler):
-    def post(self, _id):
-        print models.Share.get(_id)
+    def post(self):
+        _id = self.get_argument('_id', None)
+        if _id:
+            _id = self._unwarp_id(_id)
+            praise = models.Share.get(_id)
+            praise.good += 1
+            praise.update()
+            self.write_success({'praise_times': praise.good})
+        else:
+            self.write_fail(message=u'参数错误')
 

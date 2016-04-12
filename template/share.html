@@ -10,12 +10,12 @@
 {% end %}
 
 {% block content %}
-
     {% for share in share_list %}
     <li>
         {{ share.en_title }}
         {{ share.zh_title }}
-        <a href="{{ share.url }}"> {{ share.url }}</a><span class="praise" url_data="{{ share.url }}">赞</span>
+        <a href="{{ share.url }}"> {{ share.url }}</a>
+        <span class="praise" _id="{{ share.id }}">赞:<span class="times">{{ share.good }}</span></span>
     </li>
     {% end %}
 
@@ -27,24 +27,16 @@
             <input type="submit">
         </form>
     </div>
-
 {% end %}
+
 {% block include_js %}
 <script>
         $(".praise").click(function (){
             var share_item = $(this)
-            var url = share_item.attr('url_data')
-            $.post("/share/praise", {keyword: keyword}, function(data){
-//            var data_list = [];
-//            var translation = data.data.translation;
-//            data_list.push(translation);
-//            var explains = data.data.basic.explains;
-//            for (var i = 0;i < explains.length; i++){
-//                data_list.push(explains[i]);
-//            }
-//            $("#translation").html(data_list.join(''));
-//            $("#translation").css("display","block");
-//            change_color(keyword, data.data.count);
+            var _id = share_item.attr('_id')
+            $.post("/share/praise", {_id: _id}, function(data) {
+                share_item.find('.times').text(data.data.praise_times)
+            })
         })
 </script>
 {% end %}

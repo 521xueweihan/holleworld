@@ -52,7 +52,7 @@ class BaseHandler(RequestHandler):
         """
         return self.__hashids.encode(_id)
 
-    def _unwrap_id(self, warp_id):
+    def _unwarp_id(self, warp_id):
         """
         解密id
         :param warp_id:加密的id
