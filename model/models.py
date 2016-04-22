@@ -54,3 +54,13 @@ class Share(Model):
     good = IntegerField(ddl='bigint(20)', default=0)
     update_time = TimeField()
     create_time = TimeField()
+
+
+class Data(Model):
+    __table__ = 'data'
+
+    id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
+    url = StringField(ddl='varchar(500)')
+    content = TextField()
+    update_time = TimeField()
+    create_time = TimeField()
