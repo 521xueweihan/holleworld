@@ -5,28 +5,26 @@
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/3/31 下午4:21
 #   Desc    :   爬虫
-import datetime
-
-from bs4 import BeautifulSoup
 from tornado.httpclient import HTTPRequest, AsyncHTTPClient, HTTPClient
 
-from model import models, db
+from model import db
 from config import configs
 from client_config import CLIENT_CONFIG
-db.create_engine(**configs['db'])
 
-TEST_URL = 'https://api.github.com/search/users?q=tom'
+# 连接数据库
+db.create_engine(**configs['db'])
 
 
 class Spider(object):
     """
-    爬取
+    爬
     """
     def __init__(self, url, **kwargs):
         self.request = HTTPRequest(url, **dict(CLIENT_CONFIG, **kwargs))
 
-    def get(self):
-        return HTTPClient().fetch(self.request)
+    def get(self, **kwargs):
+        ## TODO 下一步用写异步的爬虫提高效率
+        return HTTPClient().fetch(self.request, **kwargs)
 
     def post(self):
         self.request.method = "POST"
@@ -37,25 +35,29 @@ class Content(object):
     """
     存储内容到数据库
     """
-    def __init__(self):
-        self.url = None
-        self.content = None
+    def __init__(self, model=None):
+        self.model = model
 
-    def get_content(self, url, content):
-        self.url = url
-        self.content = content
+    def save(self, kwargs):
+        if self.model:
+            data = self.model(**kwargs)
+            data.insert()
+        else:
+            print 'no model'
 
-    def save(self):
-        create_time = datetime.datetime.now()
-        data = models.Data(url=self.url, content=self.content, create_time=create_time)
-        data.insert()
-
-s = Spider(TEST_URL)
-response = s.get()
-t = Content()
-
-import json
-return_json = json.loads(response.body)
-for item in return_json['items']:
-    t.get_content(item['html_url'], item['login'])
-    t.save()
+    @staticmethod
+    def save_to_file(all_content, str_split=':', path='./data.txt'):
+        """
+        把数据存到文件中
+        :param all_content: 需要是list类型
+        :param str_split: 分割符号
+        :param path: 文件位置，默认为当前脚本运行的位置，文件名：data.txt
+        """
+        with open(path, 'w') as fb:
+            print '开始写入文件'
+            for content in all_content:
+                content_str = ''
+                for k, v in content.items():
+                    content_str += v + str_split
+                fb.write(content_str+'\n')
+            print '写入文件完成'
