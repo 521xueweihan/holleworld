@@ -67,11 +67,11 @@ class Data(Model):
     create_time = TimeField()
 
 
-class Ip(Model):
-    """ 代理ip """
-    __table__ = 'ip'
+class Proxy(Model):
+    """ 代理 """
+    __table__ = 'proxy'
 
     id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
-    ip = StringField(ddl='varchar(500)')
-    port = StringField(ddl='varchar(500)')
+    proxy_host = StringField(ddl='varchar(500)')
+    proxy_port = StringField(ddl='varchar(500)')
     create_time = TimeField()

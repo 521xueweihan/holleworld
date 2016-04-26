@@ -5,12 +5,16 @@
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/3/11 下午3:54
 #   Desc    :   首页
+import logging
+
 from app import BaseHandler
 from model import models
 
 
 class MainHandler(BaseHandler):
     def get(self):
+        # 显示访问者的ip
+        # logging.info('{}！'.format(self.request.remote_ip))
         static_url = {'demo1': '/static/tornado/index.html',
                       'demo2': '/share',
                       'demo3': '/news'}
