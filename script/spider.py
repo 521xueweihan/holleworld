@@ -5,6 +5,8 @@
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/3/31 下午4:21
 #   Desc    :   爬虫
+import requests
+
 from bs4 import BeautifulSoup
 from tornado.httpclient import HTTPRequest, HTTPClient, HTTPError
 from tornado.curl_httpclient import CurlAsyncHTTPClient
@@ -97,6 +99,29 @@ class Proxy(object):
     def __init__(self, url, **kwargs):
         self.response = Spider(url, **kwargs).get()
 
+    def test_proxy(self):
+        """ 返回经测试可用的代理 """
+        fail_num = 1
+        success_num = 1
+        success_proxy = []
+        for ip_info in self.ips_info:
+            proxy_str = ip_info['proxy_host']+':'+ip_info['proxy_port']
+            proxies = dict(http='http://'+proxy_str)
+            try:
+                requests.get("http://icanhazip.com", timeout=5, proxies=proxies)
+            except Exception:
+                print '失败数：{}'.format(fail_num)
+                fail_num += 1
+                continue
+            else:
+                print '成功数：{}！'.format(success_num)
+                success_num += 1
+                success_proxy.append(ip_info)
+
+        # 返回测试过，可用的代理
+        print '结束：成功获取{}个代理'.format(len(success_proxy))
+        return success_proxy
+
     @property
     def ips_info(self):
         """ 清理内容得到IP信息 """
@@ -117,41 +142,25 @@ def get_proxy_ips():
     """ 获取代理ips，并存储 """
     try:
         proxy = Proxy(url=URL, headers=CLIENT_CONFIG['headers'])
-        ips_list = proxy.ips_info
+        ips_list = proxy.test_proxy()
         print ips_list
     except HTTPError as e:
         print '{}:Try again!!!'.format(e)
         get_proxy_ips()
     else:
-        # 没有产生异常
+        # 存到数据库中
         t = Content(models.Proxy)
         for ip_data in ips_list:
             t.save(ip_data)
 
-    # 默认存到运行运行脚本的目录，文件名：data.txt
-    # t = Content()
-    # t.save_to_file(ips_list)
-
-    # 存到数据库
-    # t = Content(Ip)
-    # for ip_data in ips_list:
-    #     t.save(ip_data)
-    #print 'Ip already save in db'
-
-# import requests
-# # ips_list = get_proxy_ips()
-# #for ip in ips_list:
-# proxies = {
-#     "http": "http://222.136.154.254:8080",
-# }
-# r = requests.get("http://icanhazip.com", proxies=proxies)
-# print r.text
+        # # 默认存到运行运行脚本的目录，文件名：data.txt
+        # t = Content()
+        # t.save_to_file(ips_list)
 
 
 @gen.coroutine
 def main():
     flag = 1
-    get_proxy_ips()
     ips_list = models.Proxy.find_all()
     for ip in ips_list:
         while 1:
@@ -171,4 +180,5 @@ def main():
                 flag += 1
 
 if __name__ == '__main__':
+    get_proxy_ips()
     IOLoop().run_sync(main)
