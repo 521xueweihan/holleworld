@@ -4,18 +4,24 @@
 #   Author  :   XueWeiHan
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/3/31 下午4:21
-#   Desc    :   爬虫
-import requests
-
+#   Desc    :   爬虫 v2.5
 from bs4 import BeautifulSoup
 from tornado.httpclient import HTTPRequest, HTTPClient, HTTPError
 from tornado.curl_httpclient import CurlAsyncHTTPClient
 from tornado import gen
 from tornado.ioloop import IOLoop
 
-from model import db
-from model import models
-from config import configs
+try:
+    from model import db
+    from model import models
+    from config import configs
+    NO_DB = 1
+    # 连接数据库
+    db.create_engine(**configs['db'])
+except ImportError:
+    # NO_DB表示不用数据库
+    NO_DB = 0
+    print "Can't use db"
 from client_config import CLIENT_CONFIG
 
 # 测试用的访问目标（github API）
@@ -27,9 +33,6 @@ TEST_PROXY = 'http://icanhazip.com'
 # 获取代理的目标网站
 URL = 'http://www.xicidaili.com/nn/'  # 高匿ip
 #URL = 'http://www.xicidaili.com/nt/'  # 透明ip
-
-# 连接数据库
-db.create_engine(**configs['db'])
 
 
 class Spider(object):
@@ -102,10 +105,12 @@ class Proxy(object):
     @gen.coroutine
     def test_proxy(self):
         """ 返回经测试可用的代理 """
-        fail_num = 1
-        success_num = 1
+        # flag用于计数
+        flag = 1
+        all_ips = self.ips_info()
+        print '初始化爬到{}个代理，下面开始测试这些代理的可用性：'.format(len(all_ips))
         success_proxy = []
-        for ip_info in self.ips_info:
+        for ip_info in all_ips:
             try:
                 s = Spider(TEST_PROXY, headers=CLIENT_CONFIG['headers'],
                            proxy_host=ip_info['proxy_host'], request_timeout=5,
@@ -113,19 +118,19 @@ class Proxy(object):
 
                 yield s.async_get()
             except Exception:
-                print '失败数：{}'.format(fail_num)
-                fail_num += 1
+                print '第{}个，失败。'.format(flag)
                 continue
             else:
-                print '成功数：{}！'.format(success_num)
-                success_num += 1
+                print '第{}个：成功！'.format(flag)
                 success_proxy.append(ip_info)
+            finally:
+                flag += 1
 
         # 返回测试过，可用的代理
-        print '结束：成功获取{}个代理'.format(len(success_proxy))
-        gen.Return(success_proxy)
+        print '经测试：{}个可用，可用率：{}%'.format(len(success_proxy),
+                                         len(success_proxy)/len(all_ips))
+        raise gen.Return(success_proxy)
 
-    @property
     def ips_info(self):
         """ 清理内容得到IP信息 """
         ips_list = []
@@ -148,35 +153,36 @@ def get_proxy_ips():
         proxy = Proxy(url=URL, headers=CLIENT_CONFIG['headers'])
         ips_list = yield proxy.test_proxy()
     except HTTPError as e:
-        print '{}:Try again!!!'.format(e)
-        get_proxy_ips()
+        print 'Try again! Error info:{}'.format(e)
     else:
-        # 存到数据库中
-        t = Content(models.Proxy)
-        for ip_data in ips_list:
-            t.save(ip_data)
-    gen.Return()
-        # # 默认存到运行运行脚本的目录，文件名：data.txt
-        # t = Content()
-        # t.save_to_file(ips_list)
+        if NO_DB:
+            # 存到数据库中
+            t = Content(models.Proxy)
+            for ip_data in ips_list:
+                t.save(ip_data)
+        # 默认存到运行运行脚本的目录，文件名：data.txt
+        t = Content()
+        t.save_to_file(ips_list)
+    raise gen.Return(ips_list)
 
 
 @gen.coroutine
 def main():
+    """ 使用代理的异步爬虫 """
     flag = 1
-    yield get_proxy_ips()
-    ips_list = models.Proxy.find_all()
+    ips_list = yield get_proxy_ips()
     for ip in ips_list:
         while 1:
-            print 'proxy_ip {}:{}'.format(ip['proxy_host'], ip['proxy_port'])
+            print 'Use proxy ip {}:{}'.format(ip['proxy_host'], ip['proxy_port'])
             try:
+                # 这里就是异步的代理爬虫，利用代理获取目标网站的信息
                 s = Spider(TEST, headers=CLIENT_CONFIG['headers'],
-                           proxy_host=ip['proxy_host'], request_timeout=5,
+                           proxy_host=ip['proxy_host'], request_timeout=10,
                            proxy_port=int(ip['proxy_port']))
 
+                # response爬虫返回的response对象，response.body就是内容
                 response = yield s.async_get()
                 print 'NO:{}: status {}'.format(flag, response.code)
-
             except HTTPError, e:
                 print '换代理，错误信息：{}'.format(e)
                 break
