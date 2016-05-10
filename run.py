@@ -27,6 +27,7 @@ db.create_engine(**configs['db'])
 def make_app():
     return Application([
         (r'/', index.MainHandler),
+        (r'/test', index.TestHandler),
         (r'/sign', index.RegisterHandler),
         (r'/logout', index.LogoutHandler),
         (r'/news', news.NewsHandler),

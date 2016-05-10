@@ -15,10 +15,11 @@ class MainHandler(BaseHandler):
     def get(self):
         # 显示访问者的ip
         # logging.info('{}！'.format(self.request.remote_ip))
-        static_url = {'demo1': '/static/tornado/index.html',
-                      'demo2': '/share',
-                      'demo3': '/news'}
-        self.render('home.html', **static_url)
+        self.render('new_index.html')
+        # static_url = {'demo1': '/test',
+        #               'demo2': '/share',
+        #               'demo3': '/news'}
+        # self.render('home.html', **static_url)
 
     def post(self):
         email = self.get_argument('email')
@@ -32,6 +33,11 @@ class MainHandler(BaseHandler):
             self.redirect('/')
         else:
             self.render('status.html', message=u'登陆失败！')
+
+
+class TestHandler(BaseHandler):
+    def get(self):
+        self.render('new_index.html')
 
 
 class LogoutHandler(BaseHandler):

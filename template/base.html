@@ -20,7 +20,7 @@
                 <a class="navbar-brand" href="/">Holleworld</a>
             </div>
             {% if current_user %}
-                <div class="navbar-right" href="/" style="color: red">{{ current_user['nickname'] }}</div>
+                <a class="navbar-right" href="/" style="color: red">{{ current_user['nickname'] }}</a>
             {% end %}
             <div id="navbar" class="navbar-collapse collapse" >
                 <form class="navbar-form navbar-right" action="/" method="post">
@@ -39,17 +39,13 @@
     </nav>
     <div class="container">
         <div class="jumbotron">
-            <div class="container">
-                {% block jumbotron %}
-                {% end %}
-            </div>
+            {% block jumbotron %}
+            {% end %}
         </div>
-    </div>
-
-    <div class="container">
         {% block content %}
         {% end %}
     </div>
+
     <hr>
     <footer class="footer">
       <div class="container">
