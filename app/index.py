@@ -37,7 +37,12 @@ class MainHandler(BaseHandler):
 
 class TestHandler(BaseHandler):
     def get(self):
-        self.render('new_index.html')
+        self.render('upload_pic.html')
+
+    def post(self):
+        img_file = self.request.fi
+
+        print img_file
 
 
 class LogoutHandler(BaseHandler):
@@ -53,8 +58,6 @@ class RegisterHandler(BaseHandler):
     注册
     """
     def get(self):
-        if self.session:
-            self.render('status.html', message=u'已处于登陆状态')
         self.render('register.html')
 
     def post(self):
