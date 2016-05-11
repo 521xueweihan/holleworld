@@ -26,8 +26,8 @@ a:hover {
 
 html,
 body {
-  /*font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;*/
-  font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
+  font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;
+  /*font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;*/
   /*font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;*/
   height: 100%;
   background-color: #333;
@@ -38,7 +38,7 @@ body {
 body {
   color: #fff;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -67,6 +67,10 @@ body {
   padding: 30px;
 }
 
+/* ant全局信息样式 */
+.ant-message {
+  color: #666;
+}
 
 /*
  * Header

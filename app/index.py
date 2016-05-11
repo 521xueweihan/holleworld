@@ -11,11 +11,16 @@ from app import BaseHandler
 from model import models
 
 
-class MainHandler(BaseHandler):
+class LoginHandler(BaseHandler):
+    """
+    登陆
+    """
     def get(self):
-        # 显示访问者的ip
-        # logging.info('{}！'.format(self.request.remote_ip))
-        self.render('new_index.html')
+        # log显示访问者的ip
+        logging.info('{}！'.format(self.request.remote_ip))
+        if self.session:
+            self.redirect('/news')
+        self.render('index.html')
         # static_url = {'demo1': '/test',
         #               'demo2': '/share',
         #               'demo3': '/news'}
@@ -30,30 +35,12 @@ class MainHandler(BaseHandler):
             self.session = {'uid': user.uid,
                             'nickname': user.nickname,
                             'admin': user.admin}
-            self.redirect('/')
+            self.write_success()
         else:
-            self.render('status.html', message=u'登陆失败！')
+            self.write_fail()
 
 
-class TestHandler(BaseHandler):
-    def get(self):
-        self.render('upload_pic.html')
-
-    def post(self):
-        img_file = self.request.fi
-
-        print img_file
-
-
-class LogoutHandler(BaseHandler):
-    """ 注销
-    """
-    def get(self):
-        del self.session
-        self.redirect('/')
-
-
-class RegisterHandler(BaseHandler):
+class SignHandler(BaseHandler):
     """
     注册
     """
@@ -71,5 +58,31 @@ class RegisterHandler(BaseHandler):
         except Exception as e:
             self.render('status.html', message=u'注册失败！')
 
-
         self.render('status.html', message=u'注册成功！')
+
+
+class LogoutHandler(BaseHandler):
+    """
+    注销
+    """
+    def get(self):
+        del self.session
+        self.redirect('/')
+
+
+class TestHandler(BaseHandler):
+    """
+    用于练习一些功能
+    """
+    def get(self):
+        self.render('upload_pic.html')
+
+    def post(self):
+        img_file = self.request.fi
+
+        print img_file
+
+
+
+
+

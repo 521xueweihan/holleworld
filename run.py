@@ -26,9 +26,8 @@ db.create_engine(**configs['db'])
 
 def make_app():
     return Application([
-        (r'/', index.MainHandler),
-        (r'/test', index.TestHandler),
-        (r'/sign', index.RegisterHandler),
+        (r'/', index.LoginHandler),
+        (r'/sign', index.SignHandler),
         (r'/logout', index.LogoutHandler),
         (r'/news', news.NewsHandler),
         (r'/news_edit', news.NewsEditHandler),
@@ -37,6 +36,7 @@ def make_app():
         (r'/share/praise', share.PraiseHandler),
         (r'/talk', TalkHandler),
         (r'/message', MessageHandler),
+        (r'/test', index.TestHandler),
     ], StaticFileHandler, **configs['tornado_setting'])
 
 if __name__ == "__main__":

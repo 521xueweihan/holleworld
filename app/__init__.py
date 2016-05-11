@@ -21,12 +21,11 @@ class BaseHandler(RequestHandler):
     _SESSION_COOKIE_KEY = "__SESSION__"
 
     def prepare(self):
-        if self.request.path in ['/sign']:
-            return
-        elif (self.request.path not in ['/']) and (not self.session):
-            self.redirect('/')
-        elif self.session:
+        if self.session:
             self.current_user = self.get_user
+        else:
+            if self.request.path not in ['/', '/sign']:
+                self.redirect('/')
 
     @property
     def now(self):
