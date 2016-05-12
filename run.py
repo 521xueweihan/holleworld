@@ -43,4 +43,4 @@ if __name__ == "__main__":
     app = make_app()
     app.listen(PORTS)
     print u"服务启动在端口：%s，一切流畅的飞起来了！ " % PORTS
-    ioloop.IOLoop.current().start()
+    ioloop.IOLoop.instance().start()
