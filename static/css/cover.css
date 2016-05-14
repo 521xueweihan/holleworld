@@ -26,9 +26,8 @@ a:hover {
 
 html,
 body {
-  font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;
-  /*font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;*/
-  /*font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;*/
+  font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+  /*font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;*/
   height: 100%;
   background-color: #333;
   background-size:100% 100%;
@@ -41,10 +40,7 @@ body {
   /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
 }
 
-/* Extra markup and styles for table-esque vertical and horizontal centering */
-.button-show {
 
-}
 .site-wrapper {
   display: table;
   width: 100%;
@@ -136,8 +132,7 @@ body {
  */
 
 .mastfoot {
-  color: #999; /* IE8 proofing */
-  color: rgba(255,255,255,.5);
+  color: #999;
 }
 
 

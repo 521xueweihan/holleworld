@@ -21,20 +21,22 @@
             </div>
             {% if current_user %}
                 <a class="navbar-right" href="/" style="color: red">{{ current_user['nickname'] }}</a>
+            {% else %}
+                <div id="navbar" class="navbar-collapse collapse" >
+                    <form class="navbar-form navbar-right" action="/" method="post">
+                        <div class="form-group">
+                            <input type="text" name="email" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">登陆</button>
+                        <a href="/sign"><button type="button" class="btn btn-primary">注册</button></a>
+                        <a href="/logout"><button type="button" class="btn btn-primary">注销</button></a>
+                    </form>
+                </div><!--/.navbar-collapse -->
             {% end %}
-            <div id="navbar" class="navbar-collapse collapse" >
-                <form class="navbar-form navbar-right" action="/" method="post">
-                    <div class="form-group">
-                        <input type="text" name="email" placeholder="Email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" placeholder="Password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-success">登陆</button>
-                    <a href="/sign"><button type="button" class="btn btn-primary">注册</button></a>
-                    <a href="/logout"><button type="button" class="btn btn-primary">注销</button></a>
-                </form>
-            </div><!--/.navbar-collapse -->
+
         </div>
     </nav>
     <div class="container">

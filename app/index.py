@@ -75,7 +75,8 @@ class TestHandler(BaseHandler):
     用于练习一些功能
     """
     def get(self):
-        self.render('upload_pic.html')
+        # self.render('upload_pic.html')
+        self.render('test.html')
 
     def post(self):
         img_file = self.request.fi

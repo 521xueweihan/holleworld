@@ -30,6 +30,7 @@ def make_app():
         (r'/sign', index.SignHandler),
         (r'/logout', index.LogoutHandler),
         (r'/news', news.NewsHandler),
+        (r'/new/(\S+)', news.NewHandler),
         (r'/news_edit', news.NewsEditHandler),
         (r'/translate', translate.TranslateHandler),
         (r'/share', share.ShareHandler),

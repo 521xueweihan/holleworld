@@ -1,0 +1,37 @@
+{% extends "test.html" %}
+{% block title %}{{ title }}{% end %}
+{% block include_head %}
+<!-- Hightlight.css -->
+<link href="/static/css/github.css" rel="stylesheet">
+
+<!-- markdown.css -->
+<link href="/static/css/markdown.css" rel="stylesheet">
+
+<style>
+.markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 5px;
+}
+</style>
+
+{% end %}
+
+{% block content %}
+    {% autoescape None %}
+    <article class="markdown-body">
+        {{ content }}
+    </article>
+
+{% end %}
+
+{% block include_js %}
+<script src="/static/js/highlight.pack.js"></script>
+<script>
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+</script>
+{% end %}
