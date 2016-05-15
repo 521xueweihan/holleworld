@@ -6,6 +6,28 @@ body {
   padding-bottom: 20px;
 }
 
+.nav-pills > li >a {
+    border-radius: 20px;
+    border-color: #777;
+    color: #777;
+    font-weight: 200;
+
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    color: #2db7f5;
+    background-color: transparent;
+
+}
+
+.nav-pills>li>a:focus,
+.nav-pills>li>a:hover {
+    color: #2db7f5;
+    background-color: transparent;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,

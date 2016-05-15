@@ -2,12 +2,13 @@
 {% block title %}阅读{% end %}
 
 {% block content %}
-<div class="container">
     {% for news in news_list %}
-    <div class="blog-post">
-        <h2 class="blog-post-title"><a href="/new/{{news.id}}">{{ news.title }}</a></h2>
+    <div class="panel panel-info">
+      <a href="/new/{{news.id}}" class="list-group-item">
+        <p class="list-group-item-heading">{{ news.title }}</p>
+          asdfasdfasdfassdf
+      </a>
     </div>
     {% end %}
     <a href="/news_edit">发布新闻！</a>
-</div><!-- /.container -->
 {% end %}
