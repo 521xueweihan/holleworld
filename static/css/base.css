@@ -5,7 +5,7 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-
+/*导航的不同状态下的样式*/
 .nav-pills > li >a {
     border-radius: 20px;
     border-color: #777;
@@ -19,7 +19,6 @@ body {
 .nav-pills>li.active>a:hover {
     color: #2db7f5;
     background-color: transparent;
-
 }
 
 .nav-pills>li>a:focus,
@@ -79,7 +78,7 @@ body {
 
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
+  margin: 20px 0;
 }
 .marketing p + h4 {
   margin-top: 28px;

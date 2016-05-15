@@ -9,23 +9,20 @@
     <meta name="author" content="">
     <link rel="icon" href="/static/favicon.ico">
 
-    <title>测试Cover Template</title>
+    <title>首页</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
-      <!-- Custom styles for this template -->
-      <link href="/static/css/test.css" rel="stylesheet">
-      <link href="/static/css/cover.css" rel="stylesheet">
-
+    <!-- Custom styles for this template -->
+    <link href="/static/css/test.css" rel="stylesheet">
+    <link href="/static/css/cover.css" rel="stylesheet">
   </head>
 
   <body background="http://7xqirw.com1.z0.glb.clouddn.com/HelloWorld.png">
 
     <div class="site-wrapper">
-
       <div class="site-wrapper-inner">
-
         <div class="cover-container">
           <div class="inner cover" id="holleworld-about" style="display:none;">
             <h1 class="cover-heading">Holle World</h1>
@@ -38,11 +35,8 @@
               <p>&copy;2016 HolleWorld, by <a href="https://github.com/521xueweihan">@Xueweihan</a>.</p>
             </div>
           </div>
-
         </div>
-
       </div>
-
     </div>
 
     <!-- Bootstrap core JavaScript
@@ -54,12 +48,11 @@
     <script src="/static/js/login.js"></script>
     <script type="text/javascript" src="/static/js/bg-loaded.js"></script>
     <script type="text/javascript">
-       $('body').bgLoaded({
-          afterLoaded : function() {
-              setTimeout(function(){$("#holleworld-about").show();}, 2);
-
-          }
-       });
+    $('body').bgLoaded({
+      afterLoaded : function() {
+          setTimeout(function(){$("#holleworld-about").show();}, 2000);
+      }
+    });
     </script>
   </body>
 </html>

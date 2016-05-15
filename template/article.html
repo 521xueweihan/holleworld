@@ -15,23 +15,33 @@
     margin: 0 auto;
     padding: 5px;
 }
-</style>
 
+#translation {
+    position:absolute;
+    width:200px;
+    background-color: gold;
+    display:none;
+}
+</style>
 {% end %}
 
 {% block content %}
-    {% autoescape None %}
-    <article class="markdown-body">
-        {{ content }}
-    </article>
+{% autoescape None %}
+<div id="translation">
+    <p></p>
+</div>
 
+<article class="markdown-body">
+    {{ content }}
+</article>
 {% end %}
 
 {% block include_js %}
 <script src="/static/js/highlight.pack.js"></script>
+<script src="/static/js/translate.js"></script>
 <script>
-    $('pre code').each(function(i, block) {
-        hljs.highlightBlock(block);
-    });
+$('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+});
 </script>
 {% end %}

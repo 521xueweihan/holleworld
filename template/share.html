@@ -31,12 +31,12 @@
 
 {% block include_js %}
 <script>
-        $(".praise").click(function (){
-            var share_item = $(this)
-            var _id = share_item.attr('_id')
-            $.post("/share/praise", {_id: _id}, function(data) {
-                share_item.find('.times').text(data.data.praise_times)
-            })
-        })
+$(".praise").click(function (){
+    var share_item = $(this)
+    var _id = share_item.attr('_id')
+    $.post("/share/praise", {_id: _id}, function(data) {
+        share_item.find('.times').text(data.data.praise_times)
+    })
+})
 </script>
 {% end %}
