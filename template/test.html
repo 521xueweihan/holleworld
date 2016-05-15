@@ -23,12 +23,12 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">阅读</a></li>
+            <li role="presentation" class="active"><a href="/news">阅读</a></li>
             <li role="presentation"><a href="#">分享</a></li>
             {% if current_user %}
               <li role="presentation"><a href="#">{{ current_user['nickname'] }}</a></li>
             {% else %}
-              <li role="presentation"><a href="#">登陆</a></li>
+              <li role="presentation"><a href="/">登陆</a></li>
             {% end %}
           </ul>
         </nav>
@@ -41,7 +41,7 @@
       </div>
 
       <footer class="footer">
-        <p>&copy;2016 HolleWorld, by <a href="https://github.com/521xueweihan" style="color: #2db7f5;">@Xueweihan</a></p>
+        <p>&copy;2016 <a href="https://github.com/521xueweihan/holleworld" style="color: #777">HolleWorld</a>, by <a href="https://github.com/521xueweihan" style="color: #2db7f5;">@Xueweihan</a></p>
       </footer>
     </div> <!-- /container -->
     <script src="/static/js/jquery-1.11.3.min.js"></script>

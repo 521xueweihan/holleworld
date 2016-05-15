@@ -1,5 +1,27 @@
-# holleworld网站
+# HolleWorld网站
+为什么叫：HolleWorld？  
+我注册域名的时候，本来想拼'HelloWorld'，结果拼错了！我还在想这么好的域名怎么没人买？赶紧拿下！买完一看。。。  
+好了，允许你们笑三十秒～
+
 暂时没有想好到底做些什么，总之现在是一个练习的项目，锻炼自己从零搞起来一个web app！
+
+## 重写前端基本完成
+说在最前面：我的前端的知识几乎为零，所以都是修改、借鉴一些开源项目。
+- [ant-design](http://ant.design/#/): 注册和登陆
+- [typo](https://github.com/sofish/typo.css): 借鉴它的字体
+- [github-markdown-css](https://github.com/sindresorhus/github-markdown-css): github-markdown-css
+- [BootStrap](http://v3.bootcss.com/getting-started/)
+- [BootStrap模版](http://v3.bootcss.com/examples/jumbotron-narrow/)
+
+![](http://7xqirw.com1.z0.glb.clouddn.com/%E9%87%8D%E5%86%99%E5%89%8D%E7%AB%AF%E5%90%8E1.gif)
+
+TODO：
+
+1. 前端大体已经搭建完成，还有几个页面没写（发布文章，个人主页，注册，分享。）
+2. 后面就完善功能的细节和未完成的功能（头像上传；安全转义问题；查询单词功能很多地方需要完善。
+查过的所有单词高亮；文章对象的相关信息完善；评论；）  
+3. 优化静态资源（图片，css，js）体积，我觉得现在的加载速度一定很慢～
+4. 后面工作应该会忙了，自己捣鼓的时间会越来越少。努力吧，少年！
 
 ## 学习并弄好前端样式（长久任务）
 后端的逻辑和功能基本实现，但是后面打算重写一遍，后端就先这样。下一步就是学习react，然后使用
