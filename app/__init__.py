@@ -113,7 +113,8 @@ class BaseHandler(RequestHandler):
         return data
 
     def write_success(self, data=None):
-        self.write({"success": True, "code": 200, "data": self.conv_valid_json(data)})
+        self.write({"success": True, "code": 200,
+                    "data": self.conv_valid_json(data)})
         raise Finish  # 确保后面的代码不会执行
 
     def write_fail(self, **extra):

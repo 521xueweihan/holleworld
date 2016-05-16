@@ -51,7 +51,7 @@ class SignHandler(UserHandler):
         u = models.User(email=email, nickname=nickname, password=password)
         try:
             u.insert()
-        except Exception as e:
+        except Exception:
             self.render('status.html', message=u'注册失败！')
 
         self.render('status.html', message=u'注册成功！')
@@ -78,8 +78,3 @@ class TestHandler(BaseHandler):
         img_file = self.request.fi
 
         print img_file
-
-
-
-
-

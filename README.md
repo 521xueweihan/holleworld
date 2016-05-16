@@ -5,6 +5,17 @@
 
 暂时没有想好到底做些什么，总之现在是一个练习的项目，锻炼自己从零搞起来一个web app！
 
+**安装pylint，用于保证代码质量：**
+
+```
+$ cd PROJECT_ROOT
+$ pip install -U git-pylint-commit-hook
+$ ln -sf $(pwd)/.hooks/pre-commit .git/hooks/
+```
+
+## 整理代码，加上代码质量检测
+整理模版，代码；重构代码，修改了一些变量和类的名字；区分用户和管理员；
+
 ## 重写前端基本完成
 说在最前面：我的前端的知识几乎为零，所以都是修改、借鉴一些开源项目。
 - [ant-design](http://ant.design/#/): 注册和登陆
@@ -12,8 +23,6 @@
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css): github-markdown-css
 - [BootStrap](http://v3.bootcss.com/getting-started/)
 - [BootStrap模版](http://v3.bootcss.com/examples/jumbotron-narrow/)
-
-![](http://7xqirw.com1.z0.glb.clouddn.com/%E9%87%8D%E5%86%99%E5%89%8D%E7%AB%AF%E5%90%8E1.gif)
 
 TODO：
 

@@ -32,8 +32,9 @@ class ReadArticleHandler(BaseHandler):
         article_id = self._unwarp_id(article_id)
         article = models.Article.find_first('where id=?', article_id)
         # markdown转成html
-        article.content = unicode(markdown2.markdown(article.content, extras=['tables',
-                                                                      'fenced-code-blocks']))
+        extras = ['tables', 'fenced-code-blocks']
+        article.content = unicode(markdown2.markdown(article.content,
+                                                     extras=extras))
         self.render('article.html', **article)
 
 
@@ -50,6 +51,7 @@ class PostArticleHandler(AdminHandler):
 
         create_time = datetime.datetime.now()
 
-        article = models.Article(title=title, content=content, create_time=create_time)
+        article = models.Article(title=title, content=content,
+                                 create_time=create_time)
         article.insert()
         self.write_success()

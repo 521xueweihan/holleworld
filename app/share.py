@@ -42,4 +42,3 @@ class PraiseHandler(BaseHandler):
             self.write_success({'praise_times': praise.good})
         else:
             self.write_fail(message=u'参数错误')
-
