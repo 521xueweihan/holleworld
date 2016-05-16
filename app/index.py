@@ -7,24 +7,20 @@
 #   Desc    :   首页
 import logging
 
-from app import BaseHandler
+from app import BaseHandler, UserHandler
 from model import models
 
 
-class LoginHandler(BaseHandler):
+class LoginHandler(UserHandler):
     """
     登陆
     """
     def get(self):
-        # log显示访问者的ip
+        # log记录访问者的ip
         logging.info('{}！'.format(self.request.remote_ip))
         if self.session:
-            self.redirect('/news')
+            self.redirect('/article/list')
         self.render('index.html')
-        # static_url = {'demo1': '/test',
-        #               'demo2': '/share',
-        #               'demo3': '/news'}
-        # self.render('home.html', **static_url)
 
     def post(self):
         email = self.get_argument('email')
@@ -40,7 +36,7 @@ class LoginHandler(BaseHandler):
             self.write_fail()
 
 
-class SignHandler(BaseHandler):
+class SignHandler(UserHandler):
     """
     注册
     """
@@ -61,7 +57,7 @@ class SignHandler(BaseHandler):
         self.render('status.html', message=u'注册成功！')
 
 
-class LogoutHandler(BaseHandler):
+class LogoutHandler(UserHandler):
     """
     注销
     """

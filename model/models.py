@@ -22,8 +22,8 @@ class User(Model):
     create_time = TimeField()
 
 
-class News(Model):
-    __table__ = 'news'
+class Article(Model):
+    __table__ = 'article'
 
     id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
     title = StringField(ddl='varchar(500)')

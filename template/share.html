@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block title %}技术外文分享{% end %}
 
-{% block jumbotron %}
-    <h2>功能2</h2>
-    <p>
-        登陆状态下，用户可以发布优秀的英文文章，中文标题，英文标题，URL(为了安
-        全自动替换掉url带的参数)
-    </p>
+{% block nav %}
+    <li role="presentation"><a href="/article/list">阅读</a></li>
+    <li role="presentation" class="active"><a href="/share">分享</a></li>
+    {% if current_user %}
+      <li role="presentation"><a href="#">{{ current_user['nickname'] }}</a></li>
+    {% else %}
+      <li role="presentation"><a href="/">登录</a></li>
+    {% end %}
 {% end %}
 
 {% block content %}

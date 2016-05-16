@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}阅读{% end %}
+{%block include_head %}
+<style>
+.media {
+    margin: 20px;
+    padding: 5px;
+}
+
+.media-body {
+    padding-top: 5px;
+}
+</style>
+{% end %}
+
+{% block nav%}
+    <li role="presentation" class="active"><a href="/article/list">阅读</a></li>
+    <li role="presentation"><a href="/share">分享</a></li>
+    {% if current_user %}
+      <li role="presentation"><a href="#">{{ current_user['nickname'] }}</a></li>
+    {% else %}
+      <li role="presentation"><a href="/">登录</a></li>
+    {% end %}
+{% end %}
+
+{% block content %}
+{% for i, article in enumerate(articles_list) %}
+    <div class="media">
+      <div class="media-left">
+      <a href="#">
+        <img class="media-object" src="http://7xqirw.com1.z0.glb.clouddn.com/8255800.jpeg" width="64" >
+      </a>
+    </div>
+      <div class="media-body">
+        <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}.  {{article.title}}</a></h5>
+        这只是一个测试～～～～
+      </div>
+      <div class="media-right">
+          <span class="badge">18</span>
+      </div>
+    </div>
+{% end %}
+<a href="/article/post">发布新闻！</a>
+{% end %}

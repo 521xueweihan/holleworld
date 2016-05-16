@@ -14,7 +14,7 @@ from tornado.log import enable_pretty_logging
 from model import db
 from config import configs, PORTS, DEBUG
 from app.chat_room import TalkHandler, MessageHandler
-from app import index, news, translate, share
+from app import index, article, translate, share
 
 # 设置logging级别
 define("debugging", default=DEBUG, type=bool, help="Toggle debugging mode")
@@ -29,9 +29,9 @@ def make_app():
         (r'/', index.LoginHandler),
         (r'/sign', index.SignHandler),
         (r'/logout', index.LogoutHandler),
-        (r'/news', news.NewsHandler),
-        (r'/new/(\S+)', news.NewHandler),
-        (r'/news_edit', news.NewsEditHandler),
+        (r'/article/list', article.ShowArticlesHandler),
+        (r'/article/read/(\S+)', article.ReadArticleHandler),
+        (r'/article/post', article.PostArticleHandler),
         (r'/translate', translate.TranslateHandler),
         (r'/share', share.ShareHandler),
         (r'/share/praise', share.PraiseHandler),

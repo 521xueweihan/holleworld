@@ -1,4 +1,4 @@
-{% extends "test.html" %}
+{% extends "base.html" %}
 {% block title %}{{ title }}{% end %}
 {% block include_head %}
 <!-- Hightlight.css -->
@@ -25,15 +25,27 @@
 </style>
 {% end %}
 
-{% block content %}
-{% autoescape None %}
-<div id="translation">
-    <p></p>
-</div>
+{% block nav %}
+    <li role="presentation" class="active"><a href="/article/list">阅读</a></li>
+    <li role="presentation"><a href="/share">分享</a></li>
+    {% if current_user %}
+        <li role="presentation"><a href="#">{{ current_user['nickname'] }}</a></li>
+    {% else %}
+        <li role="presentation"><a href="/">登录</a></li>
+    {% end %}
+{% end %}
 
-<article class="markdown-body">
-    {{ content }}
-</article>
+{% block content %}
+
+
+{% autoescape None %}
+    <div id="translation">
+        <p></p>
+    </div>
+
+    <article class="markdown-body">
+        {{ content }}
+    </article>
 {% end %}
 
 {% block include_js %}
