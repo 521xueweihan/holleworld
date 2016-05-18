@@ -4,7 +4,7 @@
 #   Author  :   XueWeiHan
 #   E-mail  :   595666367@qq.com
 #   Date    :   16/3/17 下午5:35
-#   Desc    :   news模块
+#   Desc    :   文章模块
 import datetime
 
 import markdown2
