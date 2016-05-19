@@ -38,10 +38,10 @@ class YouDao(object):
 
     def translation(self, q):
         try:
-            logging.info('使用‘有道’，翻译：{}'.format(q))
+            logging.info('使用‘有道’，翻译：%s' % q)
             response = HTTPClient().fetch(self.api % q)
         except Exception:
-            logging.error('翻译出错！'.format(q))
+            logging.error('翻译：{}，出错！'.format(q))
             return None
         data = response.body
         return data
@@ -90,7 +90,11 @@ class TranslateHandler(BaseHandler):
 
         # 只存储单词，不存储词组等其他形式
         if 'basic' in data.keys():
-            save_word(self.get_user['uid'], keyword, data)
+            if self.get_user:
+                save_word(self.get_user['uid'], keyword, data)
+            else:
+                # 未登录状态下，uid为0
+                save_word(0, keyword, data)
 
         return self.write_success(data)
 
