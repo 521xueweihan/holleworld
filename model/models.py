@@ -6,19 +6,29 @@
 #   Date    :   16/3/14 下午5:18
 #   Desc    :   ORM对象
 
-from db import next_id
-from orm import Model, StringField, TimeField, IntegerField, TextField
+import db
+from model.orm import Model, StringField, TimeField, IntegerField, TextField
+
+
+class Code(Model):
+    __table__ = 'code'
+
+    id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
+    code = StringField(ddl='varchar(50)')
+    status = IntegerField(ddl='tinyint(4)', default=0)
+    update_time = TimeField()
+    create_time = TimeField()
 
 
 class User(Model):
     __table__ = 'user'
 
     id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
-    uid = IntegerField(default=next_id(), updatable=False, ddl='bigint(20)')
+    uid = IntegerField(default=db.next_id(), updatable=False, ddl='bigint(20)')
     email = StringField(ddl='varchar(50)')
-    nickname = StringField(ddl='varchar(50)')
-    password = StringField(ddl='varchar(6)')
-    admin = IntegerField(ddl='tinyint')
+    name = StringField(ddl='varchar(50)')
+    password = StringField(ddl='varchar(10)')
+    admin = IntegerField(ddl='tinyint(4)', default=0)
     create_time = TimeField()
 
 
