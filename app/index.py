@@ -102,11 +102,11 @@ class CheckoutSignArgsHandler(BaseHandler):
         email = self.get_argument('email', None)
         if name:
             if models.User.find_first('where name=? and status=0', name):
-                self.write_fail(message=u'用户名已被注册')
+                self.write_fail(message=u'抱歉，用户名已被占用')
 
         if email:
             if models.User.find_first('where email=? and status=0', email):
-                self.write_fail(message=u'邮箱已被注册')
+                self.write_fail(message=u'抱歉，邮箱已被占用')
         self.write_success()
 
 

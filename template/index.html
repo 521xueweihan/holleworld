@@ -64,7 +64,9 @@
     <script>
         $('#red-button').click(function() {
            $("#holleworld-about").html("<img src=\"http://7xqirw.com1.z0.glb.clouddn.com/go_button.gif\">");
-           setTimeout(function(){top.location='/article/list';}, 2000);
+           setTimeout(function(){
+               $("#holleworld-about").html("");
+               top.location='/article/list';}, 3750);
         });
     </script>
 </body>
