@@ -25,7 +25,7 @@ class TalkHandler(RequestHandler):
             self.redirect('/login')
         else:
             username = self.get_cookie('username')
-            welcome = u"""欢迎%s来到雪B聊天室""" % username.decode('utf-8')
+            welcome = u"""欢迎%s来到聊天室""" % username.decode('utf-8')
             self.render('talk.html', **{'welcome': welcome})
 
     def post(self):

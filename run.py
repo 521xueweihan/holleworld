@@ -13,7 +13,6 @@ from tornado.log import enable_pretty_logging
 
 from model import db
 from config import configs, PORTS, DEBUG
-from app.chat_room import TalkHandler, MessageHandler
 from app import index, article, translate, share
 
 # 设置logging级别
@@ -36,8 +35,6 @@ def make_app():
         (r'/translate', translate.TranslateHandler),
         (r'/share', share.ShareHandler),
         (r'/share/praise', share.PraiseHandler),
-        (r'/talk', TalkHandler),
-        (r'/message', MessageHandler),
         (r'/test', index.TestHandler),
     ], StaticFileHandler, **configs['tornado_setting'])
 
