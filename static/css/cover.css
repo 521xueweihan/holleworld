@@ -43,15 +43,16 @@ body {
 /*红色按钮*/
 .red-button .ant-btn-primary{
     color: #000000;
-    background-color: red;
-    border-color: red;
+    background-color: transparent;
+    border-color: #000000;
 }
 
 .red-button .ant-btn-primary:focus,
 .red-button .ant-btn-primary:hover {
     color: red;
     background-color: transparent;
-    border-color: red;
+    border-color: #000000;
+
 }
 
 .site-wrapper {

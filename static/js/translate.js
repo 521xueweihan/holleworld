@@ -5,16 +5,22 @@
 // 根据选择的关键字获取翻译
 function get_translation(keyword){
     $.get("/translate", {keyword: keyword}, function(data){
-        var data_list = [];
-        var translation = data.data.translation;
-        data_list.push(translation);
-        var explains = data.data.basic.explains;
-        for (var i = 0;i < explains.length; i++){
-            data_list.push(explains[i]);
+        if(data.success) {
+            var translation = data.data.translation;
+
+            var explains = data.data.basic.explains;
+
+            $("#translation-head").html(translation);
+            $("#translation-body").html(explains.join('<br>'));
+            $("#translation").css("display","block");
+            change_color(keyword, data.data.count);
         }
-        $("#translation").html(data_list.join(''));
-        $("#translation").css("display","block");
-        change_color(keyword, data.data.count);
+        else{
+            $("#translation-head").html(data.message);
+            $("#translation-body").html('');
+            $("#translation").css("display","block");
+        }
+
     })
 
 }

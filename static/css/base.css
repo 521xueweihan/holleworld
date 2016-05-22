@@ -27,6 +27,11 @@ body {
     background-color: transparent;
 }
 
+/*翻译框样式*/
+#translation-head {
+    border-bottom: 1px solid #e5e5e5;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,

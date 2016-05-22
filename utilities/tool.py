@@ -36,3 +36,13 @@ def re_url(s):
         return re_result.group()
     else:
         return None
+
+
+def my_to_sting(obj):
+    """
+    转化成str对象
+    """
+    if isinstance(obj, unicode):
+        return obj.encode('utf-8')
+    elif isinstance(obj, str):
+        return obj.decode('utf-8').encode('utf-8')
