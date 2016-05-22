@@ -56,15 +56,17 @@ def save_word(uid, query_word, data):
     如果数据库已经有了就把查询次数＋1
     如果原来没有查过，就count初始化为 1
     :param uid: 用户id
+    :param data: 请求翻译api，返回的结果（无count字段）
     :param query_word: 查询的单词
     """
+    # 未登录的用户，不记录查询次数
     word = models.Words.find_first('where uid=? and word=?', uid, query_word)
     if word:
-        data['count'] += 1
         word = models.Words.get(word.id)
-        word.count += data['count']
+        word.count += 1
         word.update_time = datetime.datetime.now()
         word.update()
+        data['count'] = word.count
         logging.info('{},查询次数＋1'.format(tool.my_to_sting(query_word)))
     else:
         # 初始化count为 1
@@ -75,7 +77,7 @@ def save_word(uid, query_word, data):
 
 
 class TranslateHandler(BaseHandler):
-    def get(self):
+    def post(self):
         keyword = self.get_argument('keyword', None)
         if not keyword:
             self.write_fail(message=u'没有参数')
@@ -95,10 +97,8 @@ class TranslateHandler(BaseHandler):
         # 只存储单词，不存储词组等其他形式
         if 'basic' in data.keys():
             if self.get_user:
+                # 只有当用户登录的后，才记录查询单词的次数
                 save_word(self.get_user['uid'], keyword, data)
-            else:
-                # 未登录状态下，uid为0
-                save_word(0, keyword, data)
         else:
             # 没有basic key则代表：没有翻译成功（不翻译句子的情况考虑）
             return self.write_fail(meassge=u'无法翻译')

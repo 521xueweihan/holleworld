@@ -4,12 +4,10 @@
 
 // 根据选择的关键字获取翻译
 function get_translation(keyword){
-    $.get("/translate", {keyword: keyword}, function(data){
+    $.post("/translate", {keyword: keyword}, function(data){
         if(data.success) {
             var translation = data.data.translation;
-
             var explains = data.data.basic.explains;
-
             $("#translation-head").html(translation);
             $("#translation-body").html(explains.join('<br>'));
             $("#translation").css("display","block");
@@ -49,7 +47,7 @@ $(document).ready(function(){
     $(this).mouseup(function(e){
         $("#translation").css("left", e.pageX-30); // 获取鼠标的位置
         $("#translation").css("top", e.pageY+10);  // 用于结果的位置
-        var txt = document.getSelection().toString();  // 获取选择的内容
+        var txt = document.getSelection().toString().trim();  // 获取选择的内容
 
         if(txt){
             get_translation(txt);  // 获取翻译结果
