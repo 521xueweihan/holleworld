@@ -79,6 +79,7 @@ def save_word(uid, query_word, data):
 class TranslateHandler(BaseHandler):
     def post(self):
         keyword = self.get_argument('keyword', None)
+        keyword = keyword.lower()
         if not keyword:
             self.write_fail(message=u'没有参数')
 
@@ -101,7 +102,7 @@ class TranslateHandler(BaseHandler):
                 save_word(self.get_user['uid'], keyword, data)
         else:
             # 没有basic key则代表：没有翻译成功（不翻译句子的情况考虑）
-            return self.write_fail(meassge=u'无法翻译')
+            return self.write_fail(message=u'查无此词')
         return self.write_success(data)
 
 if __name__ == "__main__":

@@ -26,8 +26,7 @@
 {% end %}
 
 {% block nav %}
-    <li role="presentation" class="active"><a href="/article/list">阅读</a></li>
-    <li role="presentation"><a href="/share">分享</a></li>
+    <li role="presentation" class="active"><a href="/article/list">返回</a></li>
     {% if current_user %}
         <li role="presentation"><a href="#">{{ current_user['name'] }}</a></li>
     {% else %}

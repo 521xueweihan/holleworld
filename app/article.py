@@ -11,6 +11,7 @@ import markdown2
 
 from model import models
 from app import BaseHandler, AdminHandler
+from utilities import escape
 
 
 class ShowArticlesHandler(BaseHandler):
@@ -34,7 +35,8 @@ class ReadArticleHandler(BaseHandler):
         # markdown转成html
         extras = ['tables', 'fenced-code-blocks']
         article.content = unicode(markdown2.markdown(article.content,
-                                                     extras=extras))
+                                                     extras=extras,
+                                                     safe_mode='escape'))
         self.render('article.html', **article)
 
 
@@ -47,6 +49,8 @@ class PostArticleHandler(AdminHandler):
 
     def post(self):
         title = self.get_argument('title')
+        title = escape.html_escape(title)
+
         content = self.get_argument('content')
 
         create_time = datetime.datetime.now()
