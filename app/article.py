@@ -11,7 +11,7 @@ import markdown2
 
 from model import models
 from app import BaseHandler, AdminHandler
-from utilities import escape
+from utilities import escape, tool
 
 
 class ShowArticlesHandler(BaseHandler):
@@ -37,6 +37,7 @@ class ReadArticleHandler(BaseHandler):
         article.content = unicode(markdown2.markdown(article.content,
                                                      extras=extras,
                                                      safe_mode='escape'))
+        article.content = tool.insert_span(article.content.split(' '))
         self.render('article.html', **article)
 
 

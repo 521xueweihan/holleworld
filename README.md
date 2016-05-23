@@ -12,12 +12,31 @@ $ cd PROJECT_ROOT
 $ pip install -U git-pylint-commit-hook
 $ ln -sf $(pwd)/.hooks/pre-commit .git/hooks/
 ```
+## 选中单词变色
+markdown2把文章内容转化成html，最开始我想着用字符串加正则来对单词加样式的class。但是结果
+并不好，因为很多这样做会有很多情况没有考虑到：标签可能被污染；标签后面的单词没有加上样式class；
+带标点的情况！
+
+所以，我想如果用beautifulsoup中的text，会避免上述的两种情况，这样我只需要考虑带有单词带有
+标点的情况。
+
+## 整理TODO任务
+现在网站的大体框架已经搭建完成，需要完成具体的 
+
+1. 完善阅读模块，查询过的单词变色
+2. 完善文章的相关信息
+3. 安全问题（转义，cookie等）
+4. 头像上传
+5. 图片上传
+6. 个人主页，删除，编辑等功能
+7. 现在前端的实现都是‘东拼西凑’，还是需要系统地学习前端知识
 
 ## 整理代码，加上代码质量检测
 整理模版，代码；重构代码，修改了一些变量和类的名字；区分用户和管理员；
 
 ## 重写前端基本完成
 说在最前面：我的前端的知识几乎为零，所以都是修改、借鉴一些开源项目。
+
 - [ant-design](http://ant.design/#/): 注册和登陆
 - [typo](https://github.com/sofish/typo.css): 借鉴它的字体
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css): github-markdown-css

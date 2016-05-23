@@ -26,7 +26,7 @@ function get_translation(keyword){
 // 改变颜色
 function change_color(keyword, count){
 
-    var span_id = '.' + keyword;
+    var span_id = '.' + keyword.toLowerCase();
     if(count <=3){
         $(span_id).css("color","#40FF00");
     }

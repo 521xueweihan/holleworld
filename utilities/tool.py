@@ -8,20 +8,17 @@
 import re
 
 
-def insert_span(s):
+def insert_span(words_list):
     """
-    对内容进行处理
+    对内容进行处理，对单词加入样式类，用于单词变色
     """
-    ## TODO 应应该用正则表达式否则内容中的'>'都会被删除
-
-    # 不对img标签的内容进行处理
-    if '<img>' in s:
-        return s
-    # 内容的每个单词都增加<span>标签，用于单词变色
-    elif ('<' not in s) or ('>' not in s):
-        return '<span class='+s+'>'+s+'</span>'
-    #
-    return ''
+    for i, fi_word in enumerate(words_list):
+        _re = re.compile(r'^[A-Za-z]+$')
+        re_result = _re.match(fi_word)
+        if re_result:
+            words_list[i] = '<span class=' + re_result.group().lower() + '>' \
+                            + fi_word + '</span>'
+    return ' '.join(words_list)
 
 
 def re_url(s):
