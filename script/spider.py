@@ -135,7 +135,7 @@ class Proxy(object):
         """ 清理内容得到IP信息 """
         ips_list = []
         html_body = self.response.body
-        soup = BeautifulSoup(html_body, "html.parser")
+        soup = BeautifulSoup(html_body, 'html.parser')
         ip_list_table = soup.find(id='ip_list')
         for fi_ip_info in ip_list_table.find_all('tr'):
             ip_detail = fi_ip_info.find_all('td')

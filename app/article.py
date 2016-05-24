@@ -37,7 +37,7 @@ class ReadArticleHandler(BaseHandler):
         article.content = unicode(markdown2.markdown(article.content,
                                                      extras=extras,
                                                      safe_mode='escape'))
-        article.content = tool.insert_span(article.content.split(' '))
+        article.content = tool.insert_span(article.content)
         self.render('article.html', **article)
 
 
