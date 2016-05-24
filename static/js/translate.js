@@ -11,7 +11,9 @@ function get_translation(keyword){
             $("#translation-head").html(translation);
             $("#translation-body").html(explains.join('<br>'));
             $("#translation").css("display","block");
-            change_color(keyword, data.data.count);
+            if(data.data.count){
+                change_color(keyword, data.data.count);
+            }
         }
         else{
             $("#translation-head").html(data.message);
@@ -26,18 +28,18 @@ function get_translation(keyword){
 // 改变颜色
 function change_color(keyword, count){
 
-    var span_id = '.' + keyword.toLowerCase();
+    var span_class = '.word-' + keyword.toLowerCase();
     if(count <=3){
-        $(span_id).css("color","#40FF00");
+        $(span_class).css("color","#40FF00");
     }
     else if (count <= 5){
-        $(span_id).css("color", "#0000FF");
+        $(span_class).css("color", "#0000FF");
     }
     else if (count <= 10){
-        $(span_id).css("color", "#8904B1");
+        $(span_class).css("color", "#8904B1");
     }
     else{
-        $(span_id).css("color", "#FFBF00");
+        $(span_class).css("color", "#FFBF00");
     }
 }
 
