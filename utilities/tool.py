@@ -7,26 +7,18 @@
 #   Desc    :   一些工具方法
 import re
 
-from bs4 import BeautifulSoup
 
-
-def insert_span(article_html):
+def insert_span(words_list):
     """
     对内容进行处理，对单词加入样式类，用于单词变色
     """
-    soup = BeautifulSoup(article_html, 'html.parser')
-    article_p = soup.find_all('p')
-    for fi_p in article_p:
-        if fi_p:
-            word_list = fi_p.text.split(' ')
-            for i, fi_word in enumerate(word_list):
-                _re = re.compile(r'^[A-Za-z]+$')
-                re_result = _re.match(fi_word)
-                if re_result:
-                    word_list[i] = '<span class=word-' + re_result.group().lower() + '>' + fi_word + '</span>'
-            if word_list:
-                fi_p.replace_with(' '.join(word_list))
-    return soup
+    for i, fi_word in enumerate(words_list):
+        _re = re.compile(r'^[A-Za-z]+$')
+        re_result = _re.match(fi_word)
+        if re_result:
+            words_list[i] = '<span class=word-' + re_result.group().lower() + \
+                            '>' + fi_word + '</span>'
+        return ' '.join(words_list)
 
 
 def re_url(s):
