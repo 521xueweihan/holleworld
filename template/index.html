@@ -1,74 +1,55 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta charset="utf-8">
 
-    <link rel="icon" href="/static/favicon.ico">
+  <title>首页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- Ant-design CSS -->
+  <link rel="stylesheet"  href="/static/css/antd.css">
+  <!-- Base CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
 
-    <title>首页</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/static/css/cover.css" rel="stylesheet">
-    <!-- Ant-design CSS -->
-    <link href="/static/css/test.css" rel="stylesheet">
 </head>
 
-<body background="http://7xqirw.com1.z0.glb.clouddn.com/HelloWorld.png">
-    <div class="site-wrapper">
-        <div class="site-wrapper-inner">
-            <div class="cover-container">
-                <div class="masthead clearfix">
-                    <div class="inner">
-                        <nav>
-                            <ul class="nav masthead-nav">
-                                <div id='red-button' class="red-button"></div>
-                            </ul>
-                        </nav>
+<body>
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+                <div id="banner"></div>
+                <div id="header-outer" class="outer">
+                    <div id="header-title" class="inner">
+                        <h1 id="logo-wrap">
+                            <a href="/article/list" id="logo">Holle World</a>
+                        </h1>
+
+                        <h2 id="subtitle-wrap">
+                            <a href="/article/list" id="subtitle">Reading &amp; Sharing</a>
+                        </h2>
+                        <div style="display: flex; margin: 1em 0;">
+                            <div style="width: 45%"></div>
+                                <div id="login" style="margin-left: auto;"></div>
+                            <div style="width: 2%"></div>
+                                <div id="sign" style="margin: auto;"></div>
+                            <div style="width: 45%"></div>
+                        </div>
+                        <p style="margin: 2em 0;">
+                            <iframe src="https://ghbtns.com/github-btn.html?user=521xueweihan&repo=holleworld&type=star&count=true" frameborder="0" scrolling="0" width="90px" height="20px"></iframe>
+                        </p>
                     </div>
                 </div>
 
-                <div class="inner cover" id="holleworld-about" style="color:#ffffff;">
-                    <h1 class="cover-heading">Holle World</h1>
-                    <p class="lead">分享国外技术文章的平台，看文章时会对选中的单词进行翻译，翻译过的单词会根据翻译的次数，以不同的颜色显示，方便加深记忆。</p>
-                    <div class="row">
-                        <div class="col-md-2 col-md-offset-4" >
-                            <span id="login"></span>
-                        </div>
-                        <div class="col-md-2 .col-md-offset-6" >
-                            <span id="sign"></span>
-                        </div>
-                    </div>
-                </div>
+            </header>
 
-
-                <div class="mastfoot">
-                    <div class="inner">
-                        <p>&copy;2016 <a href="https://github.com/521xueweihan/holleworld" style="color: #999">HolleWorld</a>, by <a href="https://github.com/521xueweihan">@Xueweihan</a>.</p>
-                    </div>
+            <div id="footer">
+                <div id="footer-info">
+                    &copy;2016 <a href="https://github.com/521xueweihan/holleworld" style="color: #999">HolleWorld</a>, by <a href="https://github.com/521xueweihan" style="color: #2db7f5;">@Xueweihan</a>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap core JavaScript -->
-    <!--Placed at the end of the document so the pages load faster-->
-    <script src="/static/js/jquery-1.11.3.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/common.js"></script>
-    <script src="/static/js/login.js"></script>
-    <script>
-        $('#red-button').click(function() {
-           $("#holleworld-about").html("<img src=\"http://7xqirw.com1.z0.glb.clouddn.com/go_button.gif\">");
-           setTimeout(function(){
-               $("#holleworld-about").html("");
-               top.location='/article/list';}, 3750);
-        });
-    </script>
+<script src="/static/js/jquery-1.11.3.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/login.js"></script>
 </body>
-
 </html>
