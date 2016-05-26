@@ -10,26 +10,38 @@ import re
 from bs4 import BeautifulSoup
 
 
-def insert_span(article_html):
+def insert_class(soup, tag):
     """
-    对内容进行处理，对单词加入样式类，用于单词变色
+    对单词加入样式类，用于单词变色
     """
-    soup = BeautifulSoup(article_html, 'html.parser')
-    article_p = soup.find_all('p')
-    for fi_p in article_p:
-        if fi_p:
-            new_tag = soup.new_tag('p')
-            word_list = fi_p.text.split(' ')
+    article_tag = soup.find_all(tag)
+    for fi_tag in article_tag:
+        if fi_tag:
+            new_tag = soup.new_tag(tag)
+            word_list = fi_tag.text.split(' ')
             for i, fi_word in enumerate(word_list):
+                # 正则表达式匹配单词
                 _re = re.compile(r'^[A-Za-z]+$')
                 re_result = _re.match(fi_word)
                 if re_result:
+                    # 经匹配如果是单词则创建新的tag对象，同时加入class
                     new_word_tag = soup.new_tag('span')
                     new_word_tag['class'] = 'word-' + re_result.group().lower()
                     new_word_tag.string = fi_word+' '
                     new_tag.append(new_word_tag)
             if word_list and new_tag.text:
-                fi_p.replace_with(new_tag)
+                # 替换成加了class的tag对象
+                fi_tag.replace_with(new_tag)
+
+
+def make_content(article_html):
+    """
+    对内容进行处理
+    """
+    soup = BeautifulSoup(article_html, 'html.parser')
+    tags = ['p', 'li']
+    for tag in tags:
+        insert_class(soup, tag)
     return soup
 
 

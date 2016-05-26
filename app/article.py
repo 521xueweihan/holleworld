@@ -37,7 +37,8 @@ class ReadArticleHandler(BaseHandler):
         article.content = unicode(markdown2.markdown(article.content,
                                                      extras=extras,
                                                      safe_mode='escape'))
-        article.content = tool.insert_span(article.content)
+        # 对文章内容中的单词增加样式
+        article.content = tool.make_content(article.content)
         self.render('article.html', **article)
 
 
