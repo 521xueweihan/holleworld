@@ -9,6 +9,7 @@ import logging
 
 from app import BaseHandler, UserHandler
 from model import models
+from utilities import tool
 
 
 class LoginHandler(BaseHandler):
@@ -93,20 +94,33 @@ class SignHandler(BaseHandler):
         self.write_success()
 
 
-class CheckoutSignArgsHandler(BaseHandler):
+class CheckoutNameHandler(BaseHandler):
     """
-    检查注册时输入的参数
+    检查注册时输入的name
     """
     def post(self):
         name = self.get_argument('name', None)
-        email = self.get_argument('email', None)
-        if name:
+
+        if tool.check_arg(name):
             if models.User.find_first('where name=? and status=0', name):
                 self.write_fail(message=u'抱歉，用户名已被占用')
+        else:
+            self.write_fail(message=u'用户名含有非法字符')
+        self.write_success()
 
-        if email:
+
+class CheckoutEmailHandler(BaseHandler):
+    """
+    检查注册时输入的email
+    """
+    def post(self):
+        email = self.get_argument('email', None)
+
+        if tool.check_arg(email):
             if models.User.find_first('where email=? and status=0', email):
                 self.write_fail(message=u'抱歉，邮箱已被占用')
+        else:
+            self.write_fail(message=u'邮箱含有非法字符')
         self.write_success()
 
 

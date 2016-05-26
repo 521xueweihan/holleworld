@@ -27,7 +27,8 @@ def make_app():
     return Application([
         (r'/', index.LoginHandler),
         (r'/sign', index.SignHandler),
-        (r'/check/sign/args', index.CheckoutSignArgsHandler),
+        (r'/check/sign/name', index.CheckoutNameHandler),
+        (r'/check/sign/email', index.CheckoutEmailHandler),
         (r'/logout', index.LogoutHandler),
         (r'/article/list', article.ShowArticlesHandler),
         (r'/article/read/(\S+)', article.ReadArticleHandler),

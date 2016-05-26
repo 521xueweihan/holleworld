@@ -178,3 +178,7 @@ body {
 #footer a:hover {
   text-decoration: underline;
 }
+
+.ant-modal-title {
+    text-align: center;
+}

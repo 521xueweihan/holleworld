@@ -67,3 +67,18 @@ def my_to_sting(obj):
         return obj.encode('utf-8')
     elif isinstance(obj, str):
         return obj.decode('utf-8').encode('utf-8')
+
+
+def check_arg(arg):
+    """
+    检查用户名和邮箱的合法性
+    """
+    # 不安全的字符
+    unsafe_char = ['<', '>', '&']
+    if arg:
+        for fi_unsafe_char in unsafe_char:
+            if fi_unsafe_char in arg:
+                return False
+    else:
+        return False
+    return True

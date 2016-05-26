@@ -22,10 +22,13 @@ def html_escape(s):
     """
     转义特殊符号 "&"， "<"， ">"保证HTML安全
     """
-    s = s.replace("&", "&amp;") # Must be done first!
-    s = s.replace("<", "&lt;")
-    s = s.replace(">", "&gt;")
-    return s
+    if s:
+        s = s.replace("&", "&amp;") # Must be done first!
+        s = s.replace("<", "&lt;")
+        s = s.replace(">", "&gt;")
+        return s
+    else:
+        return None
 
 
 def remove_script(s):
