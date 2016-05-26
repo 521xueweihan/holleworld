@@ -28,7 +28,7 @@ def insert_span(article_html):
                     new_word_tag['class'] = 'word-' + re_result.group().lower()
                     new_word_tag.string = fi_word+' '
                     new_tag.append(new_word_tag)
-            if word_list and new_tag.string:
+            if word_list and new_tag.text:
                 fi_p.replace_with(new_tag)
     return soup
 
