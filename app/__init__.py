@@ -130,7 +130,7 @@ class UserHandler(BaseHandler):
     """
     def prepare(self):
         # 如果未登陆则跳到首页
-        if self.session:
+        if self.get_user:
             self.current_user = self.get_user
         else:
             if self.request.path not in ['/', '/sign']:

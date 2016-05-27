@@ -42,9 +42,7 @@ body,
 }
 body {
   background: #eee;
-  font-family: 14px PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
-
-  /*font: 14px "Hiragino Sans GB", Helvetica, STHeiti, "WenQuanYi Micro Hei", "微软雅黑", sans-serif;*/
+  font: 14px PingFang SC, Verdana, Helvetica Neue, Helvetica, STHeit, sans-serif;
   -webkit-text-size-adjust: 100%;
 }
 .outer {

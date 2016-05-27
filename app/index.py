@@ -30,7 +30,7 @@ class LoginHandler(BaseHandler):
     def get(self):
         # log记录访问者的ip
         logging.info('{}！'.format(self.request.remote_ip))
-        if self.session:
+        if self.get_user:
             self.redirect('/article/list')
         self.render('index.html')
 
