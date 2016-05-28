@@ -43,7 +43,7 @@ class YouDao(object):
             logging.info('使用‘有道’，翻译：{}'.format(tool.my_to_sting(q)))
             response = HTTPClient().fetch(self.api % q)
 
-        except Exception as e:
+        except Exception:
             logging.error('翻译：{}，出错'.format(tool.my_to_sting(q)))
             return None
         data = response.body
@@ -87,13 +87,13 @@ class TranslateHandler(BaseHandler):
         data = youdao.translation(keyword)
 
         if data is None:
-            return self.write_fail(message=u'选择的翻译内容错误')
+            self.write_fail(message=u'选择的翻译内容错误')
 
         data = json.loads(data)
 
         # 检查是否参数错误
         if data['errorCode']:
-            return self.write_fail(message=YouDao_ERROR[data['errorCode']])
+            self.write_fail(message=YouDao_ERROR[data['errorCode']])
 
         # 只存储单词，不存储词组等其他形式
         if 'basic' in data.keys():
@@ -102,8 +102,8 @@ class TranslateHandler(BaseHandler):
                 save_word(self.get_user['uid'], keyword, data)
         else:
             # 没有basic key则代表：没有翻译成功（不翻译句子的情况考虑）
-            return self.write_fail(message=u'查无此词')
-        return self.write_success(data)
+            self.write_fail(message=u'查无此词')
+        self.write_success(data)
 
 if __name__ == "__main__":
     log.enable_pretty_logging()

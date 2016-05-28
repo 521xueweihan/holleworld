@@ -50,8 +50,7 @@ class PostArticleHandler(AdminHandler):
         self.render('article_edit.html')
 
     def post(self):
-        title = self.get_argument('title')
-        title = escape.html_escape(title)
+        title = escape.html_escape(self.get_argument('title'))
 
         content = self.get_argument('content')
 
