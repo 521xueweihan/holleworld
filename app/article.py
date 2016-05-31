@@ -19,11 +19,17 @@ class ShowArticlesHandler(BaseHandler):
     展示文章列表
     """
     def get(self):
-        articles_list = models.Article.find_all()
+        articles_list = models.Article.find_by("""where status=0 order by create_time
+                                               desc""")
+
         for fi_article in articles_list:
             fi_article['id'] = self._warp_id(fi_article['id'])
-        self.render('article_list.html', articles_list=articles_list)
+            user = models.User.find_first('where uid=? and status=0',
+                                          fi_article['uid'])
+            fi_article['author'] = user
 
+        self.render('article_list.html', articles_list=articles_list)
+ 
 
 class ReadArticleHandler(BaseHandler):
     """
@@ -37,6 +43,7 @@ class ReadArticleHandler(BaseHandler):
         article.content = unicode(markdown2.markdown(article.content,
                                                      extras=extras,
                                                      safe_mode='escape'))
+        article.author = models.User.find_first('where uid=? and status=0', article.uid)
         # 对文章内容中的单词增加样式
         article.content = tool.make_content(article.content)
         self.render('article.html', **article)
@@ -50,13 +57,15 @@ class PostArticleHandler(AdminHandler):
         self.render('article_edit.html')
 
     def post(self):
-        title = escape.html_escape(self.get_argument('title'))
-
+        uid = self.get_user['uid']
+        title = self.get_argument('title')
+        source_url = self.get_argument('source_url')
         content = self.get_argument('content')
+        update_time = self.now()
+        create_time = self.now()
 
-        create_time = datetime.datetime.now()
-
-        article = models.Article(title=title, content=content,
-                                 create_time=create_time)
+        article = models.Article(uid=uid, title=title, content=content,
+                                 source_url=source_url, create_time=create_time,
+                                 update_time=update_time)
         article.insert()
         self.write_success()

@@ -33,7 +33,7 @@
       </div>
       <div class="media-body">
         <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}.  {{article.title}}</a></h5>
-        <p>2016.05.30    XueweiHan  测试</p>
+        <p>{{ article.author.name }} post {{ article.title }} from ({{ article.source_url }}) at {{ article.create_time }}</p>
       </div>
       <div class="media-right">
         <span class="badge">18</span>

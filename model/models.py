@@ -36,8 +36,13 @@ class Article(Model):
     __table__ = 'article'
 
     id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
+    uid = IntegerField(updatable=False, ddl='bigint(20)')
     title = StringField(ddl='varchar(500)')
+    source_url = StringField(ddl='varchar(500)')
     content = TextField()
+    read_times = IntegerField(ddl='bigint(10)', default=0)
+    point = IntegerField(ddl='bigint(10)', default=0)
+    status = IntegerField(ddl='tinyint(4)', default=0)
     update_time = TimeField()
     create_time = TimeField()
 
