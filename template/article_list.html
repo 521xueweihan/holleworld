@@ -32,12 +32,10 @@
         </a>
       </div>
       <div class="media-body">
-        <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}.  {{article.title}}</a></h5>
-        <p>{{ article.author.name }} post {{ article.title }} from ({{ article.source_url }}) at {{ article.create_time }}</p>
+        <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}.  {{article.title}}</a><span style="color: #828282;"> <a href="{{ article.source_url }}">({{ str(article.source_url[7:]).split('/')[0] }})</a></span></h5>
+        <span style="color: #828282;">{{ article.author.name }} post {{ article.title }}  at {{ article.create_time }}</span>
       </div>
-      <div class="media-right">
-        <span class="badge">18</span>
-      </div>
+
     </div>
 {% end %}
 <a href="/article/post">发布新闻！</a>

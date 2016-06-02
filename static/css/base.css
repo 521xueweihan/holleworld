@@ -65,6 +65,7 @@ body {
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
+      background-color: #F6F6EF;
   }
 }
 .container-narrow > hr {
