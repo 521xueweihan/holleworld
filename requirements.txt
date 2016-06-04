@@ -1,0 +1,5 @@
+tornado>=4.0
+pycurl
+hashids
+beautifulsoup4
+markdown2
