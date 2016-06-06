@@ -8,7 +8,7 @@ body {
 /*导航的不同状态下的样式*/
 .nav-pills > li >a {
     border-radius: 20px;
-    border-color: #777;
+    border-color: #24ACBD;
     color: #777;
     font-weight: 200;
 
@@ -17,13 +17,13 @@ body {
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
 .nav-pills>li.active>a:hover {
-    color: #2db7f5;
+    color: #24ACBD;
     background-color: transparent;
 }
 
 .nav-pills>li>a:focus,
 .nav-pills>li>a:hover {
-    color: #2db7f5;
+    color: #24ACBD;
     background-color: transparent;
 }
 
@@ -37,7 +37,7 @@ body {
 
 /* Custom page header */
 .header {
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 3px double #eee;
   /*border-bottom: 1px solid #e5e5e5;*/
 }
@@ -90,7 +90,9 @@ body {
     padding-right: 0;
     padding-bottom: 10px;
 }
-
+.badge {
+    padding: 2px 10px 2px 10px;
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
