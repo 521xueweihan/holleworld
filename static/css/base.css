@@ -2,8 +2,8 @@
 body {
   font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
   /*font-weight: 100;*/
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 /*导航的不同状态下的样式*/
 .nav-pills > li >a {
@@ -25,11 +25,6 @@ body {
 .nav-pills>li>a:hover {
     color: #2db7f5;
     background-color: transparent;
-}
-
-/*翻译框样式*/
-#translation-head {
-    border-bottom: 1px solid #e5e5e5;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -65,7 +60,6 @@ body {
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
-      background-color: #F6F6EF;
   }
 }
 .container-narrow > hr {
@@ -90,6 +84,13 @@ body {
   margin-top: 28px;
 }
 
+/*文章描述信息框*/
+.media {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 10px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
@@ -99,10 +100,7 @@ body {
     padding-right: 0;
     padding-left: 0;
   }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
+
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
