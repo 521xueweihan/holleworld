@@ -21,6 +21,12 @@ YouDao_Key = {
     'keyfrom': 'holleworld'
 }
 
+# 七牛
+QINIU_KEY = {
+    'access_key': '',
+    'secret_key': ''
+}
+
 configs = {
     'db': {
         'host': '127.0.0.1',

@@ -6,10 +6,14 @@
 #   Date    :   16/3/11 下午3:54
 #   Desc    :   首页
 import logging
+import os
+import uuid
 
 from app import BaseHandler, UserHandler
 from model import models
 from utilities import tool
+
+__UPLOADS__ = '/uploads/'
 
 
 class LoginHandler(BaseHandler):
@@ -138,10 +142,15 @@ class TestHandler(BaseHandler):
     用于练习一些功能
     """
     def get(self):
-        # self.render('upload_pic.html')
-        self.render('test.html')
+        self.render('upload_pic.html')
+        # self.render('test.html')
 
     def post(self):
-        img_file = self.request.fi
-
-        print img_file
+        img_info = self.request.files['filearg'][0]
+        img_name = img_info['filename']
+        extn = os.path.splitext(img_name)[1]
+        img_name = str(uuid.uuid4()) + extn
+        with open(os.getcwd()+'/uploads/' + img_name, 'w+') as fb:
+            fb.write(img_info['body'])
+        
+        self.write_success()
