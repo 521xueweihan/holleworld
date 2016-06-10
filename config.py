@@ -6,11 +6,15 @@
 #   Date    :   16/3/11 下午3:54
 #   Desc    :   配置文件
 import os
+
 # debug模式
 DEBUG = True
 
 # 监听的端口
 PORTS = 8000
+
+# ROOT PATH
+ROOT_PATH = os.path.dirname(__file__)
 
 # 盐
 SALT = '54xueweihan5zuiNB'
@@ -22,7 +26,7 @@ YouDao_Key = {
 }
 
 # 七牛
-QINIU_KEY = {
+QiNiu_KEY = {
     'access_key': '',
     'secret_key': ''
 }
@@ -36,8 +40,8 @@ configs = {
         'database': 'holleworld'
     },
     'tornado_setting':{
-        'static_path': os.path.join(os.path.dirname(__file__), 'static'),
-        'template_path': os.path.join(os.path.dirname(__file__), 'template'),
+        'static_path': os.path.join(ROOT_PATH, 'static'),
+        'template_path': os.path.join(ROOT_PATH, 'template'),
         'debug': True,
         'cookie_secret': 'XuEwEiHaN'
     },

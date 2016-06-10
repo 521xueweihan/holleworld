@@ -11,9 +11,7 @@ import uuid
 
 from app import BaseHandler, UserHandler
 from model import models
-from utilities import tool
-
-__UPLOADS__ = '/uploads/'
+from utilities import tool, qiniu_upload_img
 
 
 class LoginHandler(BaseHandler):
@@ -150,7 +148,11 @@ class TestHandler(BaseHandler):
         img_name = img_info['filename']
         extn = os.path.splitext(img_name)[1]
         img_name = str(uuid.uuid4()) + extn
-        with open(os.getcwd()+'/uploads/' + img_name, 'w+') as fb:
-            fb.write(img_info['body'])
-        
+        qiniu_obj = qiniu_upload_img.QiNiu(img_name)
+        img_url = qiniu_obj.upload_data(img_info.body)
+        if img_url:
+            self.write_success()
+        else:
+            self.write_fail(message=u'上传图片失败')
+
         self.write_success()

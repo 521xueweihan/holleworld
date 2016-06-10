@@ -28,6 +28,7 @@ class User(Model):
     email = StringField(ddl='varchar(50)')
     name = StringField(ddl='varchar(50)')
     password = StringField(ddl='varchar(10)')
+    avatar = StringField(ddl='varchar(500)')
     admin = IntegerField(ddl='tinyint(4)', default=0)
     create_time = TimeField()
 
