@@ -13,7 +13,7 @@ from tornado.log import enable_pretty_logging
 
 from model import db
 from config import configs, PORTS, DEBUG
-from app import index, article, translate, share
+from app import index, article, translate, share, profile
 
 # 设置logging级别
 define("debugging", default=DEBUG, type=bool, help="Toggle debugging mode")
@@ -30,6 +30,7 @@ def make_app():
         (r'/check/sign/name', index.CheckoutNameHandler),
         (r'/check/sign/email', index.CheckoutEmailHandler),
         (r'/logout', index.LogoutHandler),
+        (r'/user/(\w+)', profile.ProfileHandler),
         (r'/article/list', article.ShowArticlesHandler),
         (r'/article/read/(\S+)', article.ReadArticleHandler),
         (r'/article/post', article.PostArticleHandler),

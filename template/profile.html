@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}阅读{% end %}
+{% block nav%}
+    <li role="presentation" class="active"><a href="/article/list">阅读</a></li>
+    <li role="presentation"><a href="/share">分享</a></li>
+    {% if current_user %}
+      <li role="presentation"><a href="/user/{{ current_user['uid'] }}">{{ current_user['name'] }}</a></li>
+    {% else %}
+      <li role="presentation"><a href="/">登录</a></li>
+    {% end %}
+{% end %}
+
+{% block content %}
+    {{ user.name }}<br>
+    <img src="{{ user.avatar or 'http://7xqirw.com1.z0.glb.clouddn.com/1.png'}}"><br>
+
+    <form enctype="multipart/form-data" id="form1" method="post" action="/test">
+        <input type='file' id="imgInp" name="filearg"/>
+        <img id="blah" src="#" alt="your image" onError="this.src='http://7xqirw.com1.z0.glb.clouddn.com/1.png';" />
+        <button type="submit">上传</button>
+    </form>
+
+{% end %}
+
+{% block include_js %}
+<script>
+function readURL(input) {
+    var file = input.files[0];
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+        alert('不是有效的图片文件!');
+        return;
+    } else if (file.size > 10*1024) {
+        alert('图片不能超过10M');
+        return;
+    } else {
+        // 展示上传的图片
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+    console.log('ok');
+}
+
+$("#imgInp").change(function(){
+    readURL(this);
+
+});
+
+$(".avatar").click(function (){
+    var avatar = $(this);
+    var _id = share_item.attr('_id')
+    $.post("/share/praise", {_id: _id}, function(data) {
+        share_item.find('.times').text(data.data.praise_times)
+    })
+})
+</script>
+{% end %}

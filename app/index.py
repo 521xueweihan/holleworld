@@ -144,7 +144,9 @@ class TestHandler(BaseHandler):
         # self.render('test.html')
 
     def post(self):
+        print(self.request)
         img_info = self.request.files['filearg'][0]
+        print img_info
         img_name = img_info['filename']
         extn = os.path.splitext(img_name)[1]
         img_name = str(uuid.uuid4()) + extn
