@@ -3,3 +3,4 @@ pycurl
 hashids
 beautifulsoup4
 markdown2
+qiniu
