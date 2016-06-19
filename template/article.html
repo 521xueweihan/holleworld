@@ -32,7 +32,7 @@
 {% block nav %}
     <li role="presentation" class="active"><a href="/article/list">返回</a></li>
     {% if current_user %}
-        <li role="presentation"><a href="#">{{ current_user['name'] }}</a></li>
+        <li role="presentation"><a href="/user/{{ current_user['uid'] }}">{{ current_user['name'] }}</a></li>
     {% else %}
         <li role="presentation"><a href="/">登录</a></li>
     {% end %}
