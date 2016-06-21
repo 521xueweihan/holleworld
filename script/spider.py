@@ -190,12 +190,4 @@ def main():
                 flag += 1
 
 if __name__ == '__main__':
-    # IOLoop().run_sync(main)
-    url = 'https://movie.douban.com/top250'
-    s = Spider(url)
-    response_obj = s.get()
-    soup = BeautifulSoup(response_obj.body, 'html.parser')
-    items = soup.find_all("div", class_="item")
-    for i, fi_itmes in enumerate(items):
-        print i
-        print fi_itmes
+    IOLoop().run_sync(main)
