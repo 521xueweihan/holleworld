@@ -35,9 +35,9 @@ def make_app():
         (r'/article/read/(\S+)', article.ReadArticleHandler),
         (r'/article/post', article.PostArticleHandler),
         (r'/translate', translate.TranslateHandler),
-        (r'/share', share.ShareHandler),
-        (r'/share/praise', share.PraiseHandler),
-        (r'/test', index.TestHandler),
+        # 暂不实现分享功能
+        # (r'/share', share.ShareHandler),
+        # (r'/share/praise', share.PraiseHandler),
     ], StaticFileHandler, **configs['tornado_setting'])
 
 if __name__ == "__main__":
