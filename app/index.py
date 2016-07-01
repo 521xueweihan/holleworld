@@ -144,17 +144,20 @@ class TestHandler(BaseHandler):
         # self.render('test.html')
 
     def post(self):
-        print(self.request)
+        uid = self.get_argument('uid')
+        user = models.User.find_first('where uid=? and status=0', uid)
+        if not user:
+            self.write_fail(message=u'用户不存在')
         img_info = self.request.files['filearg'][0]
-        print img_info
         img_name = img_info['filename']
         extn = os.path.splitext(img_name)[1]
         img_name = str(uuid.uuid4()) + extn
         qiniu_obj = qiniu_upload_img.QiNiu(img_name)
         img_url = qiniu_obj.upload_data(img_info.body)
+
         if img_url:
-            self.write_success()
+            user.avatar = 'http://' + img_url  # 更新用户头像
+            user.update()
+            self.write_success(data=img_url)
         else:
             self.write_fail(message=u'上传图片失败')
-
-        self.write_success()
