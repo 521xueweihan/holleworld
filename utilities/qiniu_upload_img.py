@@ -8,7 +8,7 @@
 import os
 import logging
 
-from qiniu import Auth, put_file, put_data
+from qiniu import Auth, BucketManager, put_file, put_data
 
 from config import QiNiu_KEY, ROOT_PATH
 
@@ -16,13 +16,15 @@ LOCAL_IMG_PATH = 'uploads'
 
 PUBLIC_URL = '7xv88n.com1.z0.glb.clouddn.com/'
 
+BUCKET_NAME = 'holleworld-img'
+
 
 class QiNiu(object):
     #需要填写你的 Access Key 和 Secret Key
     access_key = QiNiu_KEY['access_key']
     secret_key = QiNiu_KEY['secret_key']
 
-    def __init__(self, file_name, bucket_name='holleworld-img'):
+    def __init__(self, file_name, bucket_name=BUCKET_NAME):
         # 要上传的空间
         self.bucket_name = bucket_name
         # 上传到七牛后保存的文件名
@@ -31,12 +33,29 @@ class QiNiu(object):
         self.localfile = os.path.join(ROOT_PATH, LOCAL_IMG_PATH, file_name)
 
     @property
-    def token(self):
+    def auth(self):
         # 构建鉴权对象
         q = Auth(QiNiu.access_key, QiNiu.secret_key)
+        return q
+
+    @property
+    def token(self):
         # 生成上传 Token，可以指定过期时间等
-        _token = q.upload_token(self.bucket_name, self.key, 3600)
+        _token = self.auth.upload_token(self.bucket_name, self.key, 3600)
         return _token
+
+    def del_file(self, key):
+        """
+        删除文件
+        :param key: 文件名
+        :return: 成功返回None，失败返回错误信息
+        """
+        b = BucketManager(self.auth)
+        del_result = b.delete(self.bucket_name, key)
+        if not del_result:
+            return del_result
+        else:
+            return None
 
     def upload_file(self):
         """

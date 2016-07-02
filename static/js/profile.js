@@ -7,9 +7,13 @@ function readURL(input) {
     $('#uploadButton').attr('disabled', 'disabled');
     var file = input.files[0];
     if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+        $('#blah').attr('src', 'http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg');
         alert('不是有效的图片文件!');
+        return;
     } else if (file.size > 2*1024*1024) {
+        $('#blah').attr('src', 'http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg');
         alert('图片不能超过2M');
+        return;
     } else {
         // 展示上传的图片
         var reader = new FileReader();

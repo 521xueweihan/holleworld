@@ -7,6 +7,7 @@
 #   Desc    :   个人页面
 import os
 import uuid
+import logging
 
 from app import UserHandler
 from model import models
@@ -33,6 +34,13 @@ class ProfileHandler(UserHandler):
         img_url = qiniu_obj.upload_data(img_info.body)
 
         if img_url:
+            # 七牛上存的文件名
+            avatar_name = user.avatar[7:].split('/')[1]
+            # 七牛上删除原来的头像
+            del_result = qiniu_obj.del_file(avatar_name)
+            if not del_result:
+                logging.error('删除用户：{}头像时出错！'.format(uid))
+
             user.avatar = 'http://' + img_url  # 更新用户头像
             user.update()
             self.write_success(data=img_url)
