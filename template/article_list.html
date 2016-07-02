@@ -15,14 +15,13 @@
     <div class="media">
       <div class="media-left">
         <a href="#">
-          <img class="media-object" src="{{ article.author.avatar + '-avatar128.128'}}" width="64" >
+          <img class="media-object" src="{{ article.author.avatar + '-avatar128.128'}}" onError="this.src='http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg';" width="40px">
         </a>
       </div>
 
       <div class="media-body">
-        <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}. {{article.title}}</a><span style="color: #828282;"> <a href="{{ article.source_url }}">({{ str(article.source_url[7:]).split('/')[0] }})</a></span></h5>
-        <span style="color: #828282;">{{ article.author.name }} post {{ article.zh_title }}</span>
-        <span style="color: #828282;">at {{ article.create_time }}</span>
+        <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}. {{article.title}}</a><span style="color: #828282;"> <a href="{{ article.source_url }}" style="color: #000000">({{ str(article.source_url[7:]).split('/')[0] }})</a></span></h5>
+        <span style="color: #828282;">• {{ article.author.name }} • {{ article.zh_title }} • {{ article.create_time }}</span>
       </div>
 
       <div class="media-right">

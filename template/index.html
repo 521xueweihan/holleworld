@@ -26,13 +26,15 @@
                         <h2 id="subtitle-wrap">
                             <a href="/article/list" id="subtitle">Reading &amp; Sharing</a>
                         </h2>
-                        <div style="display: flex; margin: 1em 0;">
-                            <div style="width: 45%"></div>
-                                <div id="login" style="margin-left: auto;"></div>
-                            <div style="width: 2%"></div>
-                                <div id="sign" style="margin: auto;"></div>
-                            <div style="width: 45%"></div>
-                        </div>
+                        {% if not current_user %}
+                            <div style="display: flex; margin: 1em 0;">
+                                <div style="width: 45%"></div>
+                                    <div id="login" style="margin-left: auto;"></div>
+                                <div style="width: 2%"></div>
+                                    <div id="sign" style="margin: auto;"></div>
+                                <div style="width: 45%"></div>
+                            </div>
+                        {% end %}
                         <p style="margin: 2em 0;">
                             <iframe src="https://ghbtns.com/github-btn.html?user=521xueweihan&repo=holleworld&type=star&count=true" frameborder="0" scrolling="0" width="90px" height="20px"></iframe>
                         </p>

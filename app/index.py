@@ -32,8 +32,9 @@ class LoginHandler(BaseHandler):
     def get(self):
         # log记录访问者的ip
         logging.info('{}！'.format(self.request.remote_ip))
-        if self.get_user:
-            self.redirect('/article/list')
+        # 修改规则：登录状态下的用户可以访问首页
+        # if self.get_user:
+        #     self.redirect('/article/list')
         self.render('index.html')
 
     def post(self):
