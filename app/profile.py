@@ -15,6 +15,19 @@ from utilities import qiniu_upload_img
 
 
 class ProfileHandler(UserHandler):
+    @staticmethod
+    def del_old_avatar(qiniu_obj, user):
+        """
+        删除原来的头像
+        """
+        if user.avatar:
+             # 七牛上存的文件名
+            avatar_name = user.avatar[7:].split('/')[1]
+            # 七牛上删除原来的头像
+            del_result = qiniu_obj.del_file(avatar_name)
+            if not del_result:
+                logging.error('删除用户：{}头像时出错！'.format(user.uid))
+
     def get(self, uid):
         user = models.User.find_first('where uid=? and status=0', uid)
         self.render('profile.html', user=user, uid=uid)
@@ -32,15 +45,9 @@ class ProfileHandler(UserHandler):
         img_name = str(uuid.uuid4()) + extn
         qiniu_obj = qiniu_upload_img.QiNiu(img_name)
         img_url = qiniu_obj.upload_data(img_info.body)
-
+        print 'error:',img_url
         if img_url:
-            # 七牛上存的文件名
-            avatar_name = user.avatar[7:].split('/')[1]
-            # 七牛上删除原来的头像
-            del_result = qiniu_obj.del_file(avatar_name)
-            if not del_result:
-                logging.error('删除用户：{}头像时出错！'.format(uid))
-
+            ProfileHandler.del_old_avatar(qiniu_obj, user)
             user.avatar = 'http://' + img_url  # 更新用户头像
             user.update()
             self.write_success(data=img_url)
