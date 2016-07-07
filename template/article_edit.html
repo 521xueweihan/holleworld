@@ -1,16 +1,42 @@
+
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<form method="post" action="/article/post">
-    <label>标题：</label><input type="text" name="title"><br>
-    <label>中文标题：</label><input type="text" name="zh_title"><br>
-    <label>源网址：</label><input type="text" name="source_url"><br>
-    <label>内容：</label><textarea name="content"></textarea>
-    <input type="submit">
-</form>
-</body>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <title>发布文章</title>
+        <link rel="stylesheet" href="/static/css/edit.css" />
+        <link rel="stylesheet" href="/static/editor.md/css/editormd.css" />
+        <link rel="icon" href="/static/favicon.ico">
+    </head>
+    <body>
+        <div id="layout">
+            <form method="post" action="/article/post">
+                <div style="width:90%;margin: 10px auto;">
+                    <label>标题：</label><input type="text" name="title"><br>
+                    <label>中文标题：</label><input type="text" name="zh_title"><br>
+                    <label>源网址：</label><input type="text" name="source_url"><br>
+                </div>
+                <div id="test-editormd">
+                    <textarea name="content" style="display:none;">
+                    </textarea>
+                </div>
+                <div style="width:90%;margin: 10px auto;">
+                    <input type="submit" name="submit" value="发布" style="padding: 5px;" />
+                </div>
+            </form>
+        </div>
+        <script src="/static/editor.md/js/jquery.min.js"></script>
+        <script src="/static/editor.md/js/editormd.min.js"></script>
+        <script type="text/javascript">
+			var testEditor;
+            $(function() {
+                testEditor = editormd("test-editormd", {
+                    width   : "90%",
+                    height  : 640,
+                    syncScrolling : "single",
+                    path    : "/static/editor.md/lib/"
+                });
+            });
+        </script>
+    </body>
 </html>

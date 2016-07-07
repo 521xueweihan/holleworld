@@ -62,3 +62,6 @@ config.py
 
 # pycharm
 .idea/
+
+# mac os
+.DS_Store

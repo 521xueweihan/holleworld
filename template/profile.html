@@ -19,6 +19,10 @@
         <button id="uploadButton" data-loading-text="Loading..." class="btn btn-primary" disabled="disabled">上传</button>
     </form>
     <br>
+    {% if user.admin %}
+        <a href="/article/post"><button class="btn btn-success">发布文章</button></a>
+    {% end %}
+    <br>
     <br>
     <a href="/logout"><button class="btn btn-danger">登出</button></a>
 
