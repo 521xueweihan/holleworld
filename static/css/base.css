@@ -8,7 +8,7 @@ body {
 /*导航的不同状态下的样式*/
 .nav-pills > li >a {
     border-radius: 20px;
-    border-color: #24ACBD;
+    border-color: #2db7f5;
     color: #777;
     font-weight: 200;
 
@@ -17,13 +17,13 @@ body {
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
 .nav-pills>li.active>a:hover {
-    color: #24ACBD;
+    color: #2db7f5;
     background-color: transparent;
 }
 
 .nav-pills>li>a:focus,
 .nav-pills>li>a:hover {
-    color: #24ACBD;
+    color: #2db7f5;
     background-color: transparent;
 }
 
