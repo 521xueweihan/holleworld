@@ -10,19 +10,19 @@
     </head>
     <body>
         <div id="layout">
-            <form method="post" action="/article/post">
+            <form id="edit-form" method="post" action="{{ path }}">
                 <div style="width:90%;margin: 10px auto;">
-                    <label>标题：</label><input type="text" name="title" value="{{ article['title'] or '' }}"><br>
-                    <label>中文标题：</label><input type="text" name="zh_title" value="{{ article['zh_title'] or '' }}"><br>
-                    <label>源网址：</label><input type="text" name="source_url" value="{{ article['source_url'] or '' }}"><br>
+                    <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
+                    <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
+                    <label>源网址：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
                 </div>
                 <div id="test-editormd">
                     <textarea name="content" style="display:none;">
-                        {{ article['content'] or '' }}
+                        {{ article and article['content'] or ''}}
                     </textarea>
                 </div>
                 <div style="width:90%;margin: 10px auto;">
-                    <input type="submit" name="submit" value="发布" style="padding: 5px;" />
+                    <input type="submit" name="submit" value="发布" style="padding: 5px;"/>
                 </div>
             </form>
         </div>

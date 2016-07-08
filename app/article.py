@@ -67,7 +67,9 @@ class PostArticleHandler(AdminHandler):
     发布文章(现只有管理员可以发布文章）
     """
     def get(self):
-        self.render('article_edit.html', title=u'发布文章', article={})
+        self.render(
+            'article_edit.html', title=u'发布文章', path='/article/post',
+            article=None)
 
     def post(self):
         uid = self.get_user['uid']
@@ -90,10 +92,37 @@ class EditArticleHandler(AdminHandler):
     编辑文章（只有管理原可以编辑文章）
     """
     def get(self, article_id):
+        article_warp_id = article_id
         article_id = self._unwarp_id(article_id)
         article = models.Article.find_first(
             'where id=? and status=0', article_id)
         if article:
-            self.render('article_edit.html', title=u'编辑文章', article=article)
+            data = {
+                'title': u'编辑文章',
+                'article': article,
+                'path': '/article/edit/' + article_warp_id
+            }
+            self.render('article_edit.html', **data)
+        else:
+            self.write_fail(message=u'文章不存在')
+
+    def post(self, article_id):
+        # TODO: 记录最后修改文章的用户uid
+        title = self.get_argument('title')
+        zh_title = self.get_argument('zh_title')
+        source_url = self.get_argument('source_url')
+        content = self.get_argument('content')
+        update_time = self.now()
+        article_id = self._unwarp_id(article_id)
+        article = models.Article.find_first(
+            'where id=? and status=0', article_id)
+        if article:
+            article.title = title
+            article.zh_title = zh_title
+            article.source_url = source_url
+            article.content = content
+            article.update_time = update_time
+            article.update()
+            self.write_success()
         else:
             self.write_fail(message=u'文章不存在')
