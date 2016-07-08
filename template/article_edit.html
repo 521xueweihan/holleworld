@@ -3,7 +3,7 @@
 <html lang="zh">
     <head>
         <meta charset="utf-8" />
-        <title>发布文章</title>
+        <title>{{ title }}</title>
         <link rel="stylesheet" href="/static/css/edit.css" />
         <link rel="stylesheet" href="/static/editor.md/css/editormd.css" />
         <link rel="icon" href="/static/favicon.ico">
@@ -12,12 +12,13 @@
         <div id="layout">
             <form method="post" action="/article/post">
                 <div style="width:90%;margin: 10px auto;">
-                    <label>标题：</label><input type="text" name="title"><br>
-                    <label>中文标题：</label><input type="text" name="zh_title"><br>
-                    <label>源网址：</label><input type="text" name="source_url"><br>
+                    <label>标题：</label><input type="text" name="title" value="{{ article['title'] or '' }}"><br>
+                    <label>中文标题：</label><input type="text" name="zh_title" value="{{ article['zh_title'] or '' }}"><br>
+                    <label>源网址：</label><input type="text" name="source_url" value="{{ article['source_url'] or '' }}"><br>
                 </div>
                 <div id="test-editormd">
                     <textarea name="content" style="display:none;">
+                        {{ article['content'] or '' }}
                     </textarea>
                 </div>
                 <div style="width:90%;margin: 10px auto;">

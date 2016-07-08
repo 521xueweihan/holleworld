@@ -45,7 +45,6 @@ class ProfileHandler(UserHandler):
         img_name = str(uuid.uuid4()) + extn
         qiniu_obj = qiniu_upload_img.QiNiu(img_name)
         img_url = qiniu_obj.upload_data(img_info.body)
-        print 'error:',img_url
         if img_url:
             ProfileHandler.del_old_avatar(qiniu_obj, user)
             user.avatar = 'http://' + img_url  # 更新用户头像

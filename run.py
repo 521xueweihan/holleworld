@@ -34,6 +34,7 @@ def make_app():
         (r'/article/list', article.ShowArticlesHandler),
         (r'/article/read/(\S+)', article.ReadArticleHandler),
         (r'/article/post', article.PostArticleHandler),
+        (r'/article/edit/(\S+)', article.EditArticleHandler),
         (r'/translate', translate.TranslateHandler),
         # 暂不实现分享功能
         # (r'/share', share.ShareHandler),
