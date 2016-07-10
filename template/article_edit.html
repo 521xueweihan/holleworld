@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="layout">
-            <form id="edit-form" method="post" action="{{ path }}">
+            <form id="edit-form" action="{{ path }}">
                 <div style="width:90%;margin: 10px auto;">
                     <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
                     <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
@@ -38,6 +38,32 @@
                     path    : "/static/editor.md/lib/"
                 });
             });
+
+            // 提交表单
+            $("#edit-form").on('submit', function (e) {
+                    e.preventDefault();
+                    var form_obj = $(this)[0];
+                    var form_data = $(this).serializeArray().reduce(function(obj, item) {
+                                    obj[item.name] = item.value;
+                                    return obj;
+                    }, {});
+                    $.ajax({
+                       type:'POST',
+                       url: form_obj.action,
+                       data: form_data,
+                       success:function(data) {
+                           alert('提交成功！');
+                           window.location.reload();
+
+                       },
+                       error:function(data){
+                           console.log(data);
+                           alert('提交出错！');
+                           window.location.reload();
+
+                       }
+                    });
+                });
         </script>
     </body>
 </html>

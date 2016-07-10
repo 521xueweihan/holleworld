@@ -108,10 +108,10 @@ class EditArticleHandler(AdminHandler):
 
     def post(self, article_id):
         # TODO: 记录最后修改文章的用户uid
-        title = self.get_argument('title')
-        zh_title = self.get_argument('zh_title')
-        source_url = self.get_argument('source_url')
-        content = self.get_argument('content')
+        title = self.get_argument('title', None)
+        zh_title = self.get_argument('zh_title', None)
+        source_url = self.get_argument('source_url', None)
+        content = self.get_argument('content', None)
         update_time = self.now()
         article_id = self._unwarp_id(article_id)
         article = models.Article.find_first(
