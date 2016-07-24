@@ -19,9 +19,10 @@ $ ln -sf $(pwd)/.hooks/pre-commit .git/hooks/
 - 智能爬虫获取内容
 
 Bug：
-- [] 内容为空不上传
-- [] 源地址如果有’http‘则省略协议
-- [] 文章中单词标签化bug：超链接解析成了单词
+- 内容为空不上传
+- 源地址如果有http则省略协议
+- 文章中单词标签化bug：超链接解析成了单词
+- 上传头像不符合规格，应该显示之前的头像，而不是默认头像
 
 优化：
 - 编辑页面没有返回按钮，首页的跳转需要改成超链接，同时hover变色
@@ -31,7 +32,6 @@ Bug：
 - 编辑内容时支持上传图片
 - 优化静态资源（图片，css，js）体积，我觉得现在的加载速度一定很慢～
 - 阅读数不能刷
-- 压缩开发日记中图片的大小
 - 模版中的静态文件，改成static_url
 - 登录时可以按回车登录
 
@@ -59,7 +59,7 @@ Bug：
 参考了[稀土博客](https://github.com/xitu/xitu.github.io)的样式，然后使用了[mincss](https://github.com/peterbe/mincss)除去了不需要的css代码。最后，终于做出了个还算
 看的过去的样子。现在是东拼西凑，后面还是要认真，系统的学习前端的知识。
 
-![](http://7xqirw.com1.z0.glb.clouddn.com/%E9%A6%96%E9%A1%B5%E6%94%B9%E7%89%88%E5%90%8E.png)
+![](https://github.com/521xueweihan/holleworld/blob/dev/img/holleworld-show-2016-05-26.gif)
 
 ## 选中单词变色
 markdown2把文章内容转化成html，最开始我想着用字符串加正则来对单词加样式的class。但是结果
@@ -93,7 +93,7 @@ markdown2把文章内容转化成html，最开始我想着用字符串加正则�
 原理：对文章的内容，进行整理，每一个单词都是一个span，类名就是单词。然后根据，返回的查询次数，
 选择响应的class，改变style属性。变色等级分别为:绿——蓝——紫——黄，效果如下：
 
-![](http://7xqirw.com1.z0.glb.clouddn.com/%E5%8D%95%E8%AF%8D%E5%8F%98%E8%89%B2%E6%95%88%E6%9E%9C.gif)
+![](https://github.com/521xueweihan/holleworld/blob/dev/img/show3-2016-04-05.gif)
 
 ## 安全：html的转义
 因为发布新闻的功能是用户输入的内容，会有恶意用户，输入恶意js脚本，所以需要对用户输入的内容，
@@ -117,8 +117,10 @@ TODO：优化爬虫，完善内容展示页面样式，发布内容代码markdow
 
 ## 翻译结果展示效果实现
 原来一直走进了死胡同，其实实现这个效果，只要监听鼠标放开的事件。这样的好处就是双击和点拉选择，
-都可触发事件。效果如下图（细节部分还没有做）：  
-![](http://7xqirw.com1.z0.glb.clouddn.com/3%E6%9C%88%2029%2C%202016%2017%3A32.gif)
+都可触发事件。效果如下图（细节部分还没有做）：
+
+![](https://github.com/521xueweihan/holleworld/blob/dev/img/show2-2016-03-29.gif)
+
 
 ## 增加翻译功能
 对鼠标选中的内容进行翻译，调用有道翻译的api，以后或许会支持其他的翻译。待完善：由于我的前端水
@@ -127,7 +129,7 @@ TODO：优化爬虫，完善内容展示页面样式，发布内容代码markdow
 
 那也记录下现在的样子：
 
-![](http://7xqirw.com1.z0.glb.clouddn.com/holleworld%E7%BF%BB%E8%AF%91%E5%AE%9E%E7%8E%B01.gif)
+![](https://github.com/521xueweihan/holleworld/blob/dev/img/show1-2016-03-24.gif)
 
 ## 增加了新闻模块
 新闻模块支持显示，发布。发布的操作只能是管理员才能操作。（感觉权限统一继承一个类不好，但是还没
