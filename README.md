@@ -9,8 +9,9 @@
 被翻译的单词变成相应的颜色。查询次数由低到高，变色等级分别为:绿——蓝——紫——黄。
 
 ## 网站展示
-功能还在开发中，还没有上线，现在网站的样子如下：
-![](https://github.com/521xueweihan/holleworld/blob/dev/img/holleworld-show-2016-05-26.gif)
+网站的很多功能还在开发中，还没有上线，所以就以动图的形式展示网站现在的样子：
+
+![](https://github.com/521xueweihan/holleworld/blob/dev/img/holleworld-show-2016-07-24.gif)
 
 ## 用到的技术
 TODO
