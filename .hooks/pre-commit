@@ -3,4 +3,4 @@
 # Requirements:
 #       pip install git-pylint-commit-hook
 #
-git-pylint-commit-hook --limit=0 --pylintrc=.pylintrc
+git-pylint-commit-hook --limit=8.5 --pylintrc=.pylintrc
