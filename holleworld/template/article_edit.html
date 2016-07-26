@@ -1,69 +1,68 @@
-
 <!DOCTYPE html>
 <html lang="zh">
-    <head>
-        <meta charset="utf-8" />
-        <title>{{ title }}</title>
-        <link rel="stylesheet" href="/static/css/edit.css" />
-        <link rel="stylesheet" href="/static/editor.md/css/editormd.css" />
-        <link rel="icon" href="/static/favicon.ico">
-    </head>
-    <body>
-        <div id="layout">
-            <form id="edit-form" action="{{ path }}">
-                <div style="width:90%;margin: 10px auto;">
-                    <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
-                    <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
-                    <label>源网址：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
-                </div>
-                <div id="test-editormd">
-                    <textarea name="content" style="display:none;">
-                        {{ article and article['content'] or ''}}
-                    </textarea>
-                </div>
-                <div style="width:90%;margin: 10px auto;">
-                    <input type="submit" name="submit" value="发布" style="padding: 5px;"/>
-                </div>
-            </form>
-        </div>
-        <script src="/static/editor.md/js/jquery.min.js"></script>
-        <script src="/static/editor.md/js/editormd.min.js"></script>
-        <script type="text/javascript">
-			var testEditor;
-            $(function() {
-                testEditor = editormd("test-editormd", {
-                    width   : "90%",
-                    height  : 640,
-                    syncScrolling : "single",
-                    path    : "../static/editor.md/lib/"
-                });
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/edit.css" />
+    <link rel="stylesheet" href="/static/editor.md/css/editormd.css" />
+    <link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+    <div id="layout">
+        <form id="edit-form" action="{{ path }}">
+            <div style="width:90%;margin: 10px auto;">
+                <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
+                <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
+                <label>源网址：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
+            </div>
+            <div id="test-editormd">
+                <textarea name="content" style="display:none;">
+                    {{ article and article['content'] or ''}}
+                </textarea>
+            </div>
+            <div style="width:90%;margin: 10px auto;">
+                <input type="submit" name="submit" value="发布" style="padding: 5px;"/>
+            </div>
+        </form>
+    </div>
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/editormd.min.js"></script>
+    <script type="text/javascript">
+        var testEditor;
+        $(function() {
+            testEditor = editormd("test-editormd", {
+                width   : "90%",
+                height  : 640,
+                syncScrolling : "single",
+                path    : "../static/editor.md/lib/"
             });
+        });
 
-            // 提交表单
-            $("#edit-form").on('submit', function (e) {
-                    e.preventDefault();
-                    var form_obj = $(this)[0];
-                    var form_data = $(this).serializeArray().reduce(function(obj, item) {
-                                    obj[item.name] = item.value;
-                                    return obj;
-                    }, {});
-                    $.ajax({
-                       type:'POST',
-                       url: form_obj.action,
-                       data: form_data,
-                       success:function(data) {
-                           alert('提交成功！');
-                           window.location.reload();
+        // 提交表单
+        $("#edit-form").on('submit', function (e) {
+            e.preventDefault();
+            var form_obj = $(this)[0];
+            var form_data = $(this).serializeArray().reduce(function(obj, item) {
+                            obj[item.name] = item.value;
+                            return obj;
+            }, {});
+            $.ajax({
+               type:'POST',
+               url: form_obj.action,
+               data: form_data,
+               success:function(data) {
+                   alert('提交成功！');
+                   window.location.reload();
 
-                       },
-                       error:function(data){
-                           console.log(data);
-                           alert('提交出错！');
-                           window.location.reload();
+               },
+               error:function(data){
+                   console.log(data);
+                   alert('提交出错！');
+                   window.location.reload();
 
-                       }
-                    });
-                });
-        </script>
-    </body>
+               }
+            });
+        });
+    </script>
+</body>
 </html>
