@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/css/edit.css" />
-    <link rel="stylesheet" href="/static/editor.md/css/editormd.css" />
-    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="{{ static_url('css/edit.css') }}" />
+    <link rel="stylesheet" href="{{ static_url('editor.md/css/editormd.css') }}" />
+    <link rel="icon" href="{{ static_url('favicon.ico') }}">
 </head>
 <body>
+    <a href=""><div id="back">返回</div></a>
     <div id="layout">
         <form id="edit-form" action="{{ path }}">
             <div style="width:90%;margin: 10px auto;">
@@ -25,8 +26,8 @@
             </div>
         </form>
     </div>
-    <script src="/static/js/jquery-1.11.3.min.js"></script>
-    <script src="/static/js/editormd.min.js"></script>
+    <script src="{{ static_url('js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ static_url('js/editormd.min.js') }}"></script>
     <script type="text/javascript">
         var testEditor;
         $(function() {
@@ -34,7 +35,7 @@
                 width   : "90%",
                 height  : 640,
                 syncScrolling : "single",
-                path    : "../static/editor.md/lib/"
+                path    : "{{ static_url('editor.md/lib/') }}"
             });
         });
 
@@ -52,8 +53,7 @@
                data: form_data,
                success:function(data) {
                    alert('提交成功！');
-                   window.location.reload();
-
+                   window.location.href = '/article/list';
                },
                error:function(data){
                    console.log(data);
@@ -63,6 +63,11 @@
                }
             });
         });
+
+        // 返回
+        $('#back').on('click', function () {
+            history.back();
+        })
     </script>
 </body>
 </html>

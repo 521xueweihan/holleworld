@@ -5,6 +5,16 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+#holle-world-index a {
+  text-decoration: none;
+  color: #777;
+}
+
+#holle-world-index a:hover {
+    color: #2db7f5;
+}
+
 /*导航的不同状态下的样式*/
 .nav-pills > li >a {
     border-radius: 20px;

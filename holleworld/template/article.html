@@ -2,10 +2,10 @@
 {% block title %}{{ title }}{% end %}
 {% block include_head %}
 <!-- Hightlight.css -->
-<link href="/static/css/github.css" rel="stylesheet">
+<link href="{{ static_url('css/github.css') }}" rel="stylesheet">
 
 <!-- markdown.css -->
-<link href="/static/css/markdown.css" rel="stylesheet">
+<link href="{{ static_url('css/markdown.css') }}" rel="stylesheet">
 
 <style>
 .markdown-body {
@@ -53,8 +53,8 @@
 {% end %}
 
 {% block include_js %}
-<script src="/static/js/highlight.pack.js"></script>
-<script src="/static/js/translate.js"></script>
+<script src="{{ static_url('js/highlight.pack.js') }}"></script>
+<script src="{{ static_url('js/translate.js') }}"></script>
 <script>
 $('pre code').each(function(i, block) {
     hljs.highlightBlock(block);
