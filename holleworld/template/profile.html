@@ -12,18 +12,19 @@
 
 {% block content %}
     <form enctype="multipart/form-data" id="form1">
-        头像：<img id="blah" src="{{ user.avatar }}" onError="this.src='http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg';" width="64px" height="64px"><br>
+        头像：<a href="javascript:void(0)" onclick="return click_avatar()"><img id="avatar_img" src="{{ user.avatar }}" onError="this.src='{{ static_url('default_avatar.jpg') }}';" width="64px" alt="defult"></a><br>
+        <br>
         用户名：{{ user.name }}<br>
         <input id="uid" name="uid" value="{{ uid }}" hidden="">
-        <input type='file' id="imgInp" name="filearg"/>
+        <input type='file' id="avatar_inp" name="filearg" style="display: none"/>
         <button id="uploadButton" data-loading-text="Loading..." class="btn btn-primary" disabled="disabled">更换头像</button>
     </form>
     <br>
     {% if user.admin %}
         <a href="/article/post"><button class="btn btn-success">发布文章</button></a>
+        <br>
+        <br>
     {% end %}
-    <br>
-    <br>
     <a href="/logout"><button class="btn btn-danger">登出</button></a>
 
 {% end %}

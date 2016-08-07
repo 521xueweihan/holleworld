@@ -7,25 +7,28 @@ function readURL(input) {
     $('#uploadButton').attr('disabled', 'disabled');
     var file = input.files[0];
     if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
-        $('#blah').attr('src', 'http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg');
         alert('不是有效的图片文件!');
         return;
     } else if (file.size > 2*1024*1024) {
-        $('#blah').attr('src', 'http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg');
         alert('图片不能超过2M');
         return;
     } else {
         // 展示上传的图片
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
+            $('#avatar_img').attr('src', e.target.result);
         };
         reader.readAsDataURL(input.files[0]);
         $('#uploadButton').removeAttr('disabled');
     }
 }
 
-$("#imgInp").change(function(){
+// 点击头像上传图片
+function click_avatar(){
+    $("#avatar_inp").click();
+}
+
+$("#avatar_inp").change(function(){
     readURL(this);
 });
 
