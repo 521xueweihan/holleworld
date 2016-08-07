@@ -64,13 +64,13 @@ class BaseHandler(RequestHandler):
         if self.session:
             return json.loads(self.session)
         else:
-            return None
+            return {}
 
     @property
     def get_admin(self):
         """
         返回是否是管理员
-        :return: 0：不是，1：是
+        :return: 0：不是，!0：是
         """
         if self.get_user:
             return self.get_user['admin']
@@ -142,6 +142,6 @@ class AdminHandler(BaseHandler):
     管理员
     """
     def prepare(self):
-        # 提示没有管理员权限
+        # 提示没有权限
         if not self.get_admin:
             self.render('status.html', message=u'对不起你没有权限！')

@@ -17,13 +17,13 @@ class ShowArticlesHandler(BaseHandler):
     展示文章列表
     """
     def get(self):
-        articles_list = models.Article.find_by("""where status=0 order by create_time
-                                               desc""")
+        articles_list = models.Article.find_by("""where status=0
+                                               order by create_time desc""")
 
         for fi_article in articles_list:
             fi_article['id'] = self._warp_id(fi_article['id'])
             user = models.User.find_first(
-                'where uid=? and status=0', fi_article['uid'])
+                'where uid=? and status=0', fi_article['author_id'])
             fi_article['author'] = user
 
         self.render('article_list.html', articles_list=articles_list)
@@ -54,9 +54,19 @@ class ReadArticleHandler(BaseHandler):
                 )
             )
             article.author = models.User.find_first(
-                'where uid=? and status=0', article.uid)
+                'where uid=? and status=0', article.author_id)
             # 对文章内容中的单词增加样式
             article.content = tool.make_content(article.content)
+            # 判断权限是否有编辑以及删除功能
+            # 作者以及管理员有编辑权限
+            user_power = self.get_user.get('admin', None)
+            if user_power == 1 and \
+               self.get_user.get('uid') == article.author_id:
+                article.can_edit = True
+            elif self.get_user.get('admin', None) > 1:
+                article.can_edit = True
+            else:
+                article.can_edit = False
             self.render('article.html', **article)
         else:
             self.write_fail(message=u'文章不存在')
@@ -64,7 +74,7 @@ class ReadArticleHandler(BaseHandler):
 
 class PostArticleHandler(AdminHandler):
     """
-    发布文章(现只有管理员可以发布文章）
+    发布文章
     """
     def get(self):
         self.render(
@@ -72,7 +82,8 @@ class PostArticleHandler(AdminHandler):
             article=None)
 
     def post(self):
-        uid = self.get_user['uid']
+        author_id = self.get_user['uid']
+        last_editor_id = self.get_user['uid']
         title = self.get_argument('title')
         zh_title = self.get_argument('zh_title')
         source_url = self.get_argument('source_url')
@@ -80,8 +91,9 @@ class PostArticleHandler(AdminHandler):
         update_time = self.now()
         create_time = self.now()
         article = models.Article(
-            uid=uid, title=title, zh_title=zh_title, content=content,
-            source_url=source_url, create_time=create_time, update_time=update_time
+            author_id=author_id, last_editor_id=last_editor_id, title=title,
+            zh_title=zh_title, content=content, source_url=source_url,
+            create_time=create_time, update_time=update_time
         )
         article.insert()
         self.write_success()
@@ -89,7 +101,7 @@ class PostArticleHandler(AdminHandler):
 
 class EditArticleHandler(AdminHandler):
     """
-    编辑文章（只有管理原可以编辑文章）
+    编辑文章
     """
     def get(self, article_id):
         article_warp_id = article_id
@@ -107,7 +119,7 @@ class EditArticleHandler(AdminHandler):
             self.write_fail(message=u'文章不存在')
 
     def post(self, article_id):
-        # TODO: 记录最后修改文章的用户uid
+        last_editor_id = self.get_user.get('uid', None)
         title = self.get_argument('title', None)
         zh_title = self.get_argument('zh_title', None)
         source_url = self.get_argument('source_url', None)
@@ -116,7 +128,11 @@ class EditArticleHandler(AdminHandler):
         article_id = self._unwarp_id(article_id)
         article = models.Article.find_first(
             'where id=? and status=0', article_id)
-        if article:
+        if not article:
+            self.write_fail(message=u'文章不存在')
+        elif article.author_id == self.get_user.get('uid') \
+             or self.get_user.get('admin', 0) > 1:
+            article.last_editor_id = last_editor_id
             article.title = title
             article.zh_title = zh_title
             article.source_url = source_url
@@ -125,4 +141,23 @@ class EditArticleHandler(AdminHandler):
             article.update()
             self.write_success()
         else:
+            self.write_fail(message=u'没有权限')
+
+
+class DeleteArticleHandler(AdminHandler):
+    """
+    删除文章
+    """
+    def post(self, article_id):
+        article_id = self._unwarp_id(article_id)
+        article = models.Article.find_first(
+            'where id=? and status=0', article_id)
+        if not article:
             self.write_fail(message=u'文章不存在')
+        elif article.author_id == self.get_user.get('uid') \
+             or self.get_user.get('admin', 0) > 1:
+            article.status = 1
+            article.update()
+            self.write_success()
+        else:
+            self.write_fail(message=u'没有权限')

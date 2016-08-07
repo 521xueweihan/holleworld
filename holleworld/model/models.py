@@ -37,7 +37,8 @@ class Article(Model):
     __table__ = 'article'
 
     id = IntegerField(primary_key=True, updatable=False, ddl='bigint(20)')
-    uid = IntegerField(updatable=False, ddl='bigint(20)')
+    author_id = IntegerField(updatable=False, ddl='bigint(20)')
+    last_editor_id = IntegerField(updatable=True, ddl='bigint(20)')
     title = StringField(ddl='varchar(500)')
     zh_title = StringField(ddl='varchar(500)')
     source_url = StringField(ddl='varchar(500)')
