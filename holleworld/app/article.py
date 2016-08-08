@@ -25,7 +25,7 @@ class ShowArticlesHandler(BaseHandler):
             user = models.User.find_first(
                 'where uid=? and status=0', fi_article['author_id'])
             fi_article['author'] = user
-
+            fi_article['show_source_url'] = fi_article.source_url.split('://')[1]
         self.render('article_list.html', articles_list=articles_list)
  
 
@@ -86,7 +86,7 @@ class PostArticleHandler(AdminHandler):
         last_editor_id = self.get_user['uid']
         title = self.get_argument('title')
         zh_title = self.get_argument('zh_title')
-        source_url = self.get_argument('source_url')
+        source_url = tool.re_url(self.get_argument('source_url'))
         content = self.get_argument('content')
         update_time = self.now()
         create_time = self.now()
@@ -122,7 +122,7 @@ class EditArticleHandler(AdminHandler):
         last_editor_id = self.get_user.get('uid', None)
         title = self.get_argument('title', None)
         zh_title = self.get_argument('zh_title', None)
-        source_url = self.get_argument('source_url', None)
+        source_url = tool.re_url(self.get_argument('source_url', None))
         content = self.get_argument('content', None)
         update_time = self.now()
         article_id = self._unwarp_id(article_id)

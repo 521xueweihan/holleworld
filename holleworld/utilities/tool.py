@@ -51,12 +51,14 @@ def re_url(s):
     符合->返回(不含参数：'?arg=xxx')的url
     不符合->返回None
     """
+    if not s.startswith(('http', 'https')):
+        s = 'http://' + s
     _re = re.compile(r'(http|https)+://[^\s?]*')
     re_result = _re.match(s)
     if re_result:
         return re_result.group()
     else:
-        return None
+        return ''
 
 
 def my_to_sting(obj):

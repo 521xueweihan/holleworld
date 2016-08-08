@@ -21,7 +21,7 @@
 
       <div class="media-body">
         <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}. {{article.title}}</a></h5>
-        <span style="color: #828282;"><a href="{{ article.source_url }}" style="color: #828282"> • {{ str(article.source_url[7:]).split('/')[0] }}</a> • {{ article.author.name }} • {{ article.zh_title }} • {{ article.create_time }}</span>
+        <span style="color: #828282;"><a href="{{ article.source_url }}" style="color: #828282"> • {{ article.show_source_url }}</a> • {{ article.author.name }} • {{ article.zh_title }} • {{ article.create_time }}</span>
       </div>
 
       <div class="media-right">
