@@ -15,7 +15,7 @@
     <div class="media">
       <div class="media-left">
         <a href="#">
-          <img class="media-object" src="{{ article.author.avatar + '-avatar128.128'}}" onError="this.src='http://7xv88n.com1.z0.glb.clouddn.com/default_avatar.jpg';" width="40px">
+          <img class="media-object" src="{{ article.author.avatar + '-avatar128.128'}}" onError="this.src='{{ static_url('default_avatar.jpg') }}';" width="40px">
         </a>
       </div>
 
@@ -31,5 +31,4 @@
       </div>
     </div>
 {% end %}
-<div style="display: none"><a href="/article/post" >发布新闻！</a></div>
 {% end %}

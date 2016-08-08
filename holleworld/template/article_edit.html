@@ -14,7 +14,7 @@
             <div style="width:90%;margin: 10px auto;">
                 <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
                 <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
-                <label>源网址：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
+                <label>原文链接：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
             </div>
             <div id="test-editormd">
                 <textarea name="content" style="display:none;">
@@ -43,23 +43,47 @@
         $("#edit-form").on('submit', function (e) {
             e.preventDefault();
             var form_obj = $(this)[0];
+            var flag = true; // 用来标记表单是否有空值
             var form_data = $(this).serializeArray().reduce(function(obj, item) {
                             obj[item.name] = item.value;
                             return obj;
             }, {});
+            // 验证表单数据
+            $.each(form_data, function(k, v) {
+                if(!flag){
+                    return;
+                }
+                if(v.trim().length == 0) {
+                    flag = false;
+                    if(k == 'title'){
+                        alert('标题不能为空')
+                    }
+                    else if(k == 'zh_title'){
+                        alert('中文标题不能为空')
+                    }
+                    else if(k == 'content'){
+                        alert('内容不能为空')
+                    }
+                    else if(k == 'source_url'){
+                        alert('原文链接不能为空')
+                    }
+                }
+            });
             $.ajax({
-               type:'POST',
-               url: form_obj.action,
-               data: form_data,
-               success:function(data) {
-                   alert('提交成功！');
-                   window.location.href = '/article/list';
-               },
-               error:function(data){
-                   console.log(data);
-                   alert('提交出错！');
-                   window.location.reload();
-
+                type:'POST',
+                url: form_obj.action,
+                data: form_data,
+                beforeSend: function(){
+                    return flag;
+                },
+                success: function() {
+                    alert('提交成功！');
+                    window.location.href = '/article/list';
+                },
+                error: function(data){
+                    console.log(data);
+                    alert('提交出错！');
+                    window.location.reload();
                }
             });
         });
