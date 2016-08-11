@@ -12,7 +12,7 @@ import decimal
 
 from tornado.web import RequestHandler, Finish
 
-from config import SALT
+from config import SALT, COUNT
 
 
 class BaseHandler(RequestHandler):
@@ -32,7 +32,7 @@ class BaseHandler(RequestHandler):
         """
         :return: count每页条数
         """
-        count = 20
+        count = COUNT
         return (page-1)*count, count
 
     @property
