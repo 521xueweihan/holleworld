@@ -27,6 +27,14 @@ class BaseHandler(RequestHandler):
         if self.session:
             self.current_user = self.get_user
 
+    @staticmethod
+    def offset(page):
+        """
+        :return: count每页条数
+        """
+        count = 20
+        return (page-1)*count, count
+
     @property
     def now(self):
         """

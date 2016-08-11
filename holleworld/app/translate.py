@@ -72,7 +72,7 @@ def save_word(uid, query_word, data):
         # 初始化count为 1
         data['count'] = 1
         Words(uid=uid, word=query_word,
-                     create_time=datetime.datetime.now()).insert()
+              create_time=datetime.datetime.now()).insert()
     logging.info("存储单词:{},成功！".format(tool.my_to_sting(query_word)))
 
 

@@ -17,14 +17,14 @@ class ShowArticlesHandler(BaseHandler):
     展示文章列表
     """
     def get(self):
-        # 一页二十条
         page = int(self.get_argument('page', 1))
         total = Article.count_by('where status=0')
+        offset, count = self.offset(page)
         articles_list = Article.find_by(
             """where status=0 order by create_time desc limit ?, ?""",
-            (page-1)*20, page*20
+            offset, count
         )
-        has_more = total > page*20
+        has_more = total > offset+count
         for fi_article in articles_list:
             fi_article['id'] = self._warp_id(fi_article['id'])
             user = User.find_first(
@@ -35,7 +35,7 @@ class ShowArticlesHandler(BaseHandler):
             # 原文地址只展示host
             fi_article['show_source_url'] = fi_article['show_source_url'].split('/')[0]
         self.render('article_list.html', articles_list=articles_list,
-                    has_more=has_more, page=page)
+                    has_more=has_more, page=page, count=count)
  
 
 class ReadArticleHandler(BaseHandler):
