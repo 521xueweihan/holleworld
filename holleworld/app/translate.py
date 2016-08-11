@@ -12,7 +12,7 @@ import datetime
 from tornado.httpclient import HTTPClient
 from tornado import log
 
-from model import models
+from model.models import Words
 from app import BaseHandler
 from utilities import tool
 from config import YouDao_Key
@@ -60,9 +60,9 @@ def save_word(uid, query_word, data):
     :param query_word: 查询的单词
     """
     # 未登录的用户，不记录查询次数
-    word = models.Words.find_first('where uid=? and word=?', uid, query_word)
+    word = Words.find_first('where uid=? and word=?', uid, query_word)
     if word:
-        word = models.Words.get(word.id)
+        word = Words.get(word.id)
         word.count += 1
         word.update_time = datetime.datetime.now()
         word.update()
@@ -71,7 +71,7 @@ def save_word(uid, query_word, data):
     else:
         # 初始化count为 1
         data['count'] = 1
-        models.Words(uid=uid, word=query_word,
+        Words(uid=uid, word=query_word,
                      create_time=datetime.datetime.now()).insert()
     logging.info("存储单词:{},成功！".format(tool.my_to_sting(query_word)))
 

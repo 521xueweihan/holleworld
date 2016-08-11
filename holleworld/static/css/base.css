@@ -6,12 +6,12 @@ body {
   padding-bottom: 10px;
 }
 
-#holle-world-index a {
+.holle-world-index a {
   text-decoration: none;
   color: #777;
 }
 
-#holle-world-index a:hover {
+.holle-world-index a:hover {
     color: #2db7f5;
 }
 

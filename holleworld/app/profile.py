@@ -10,7 +10,7 @@ import uuid
 import logging
 
 from app import UserHandler
-from model import models
+from model.models import User
 from utilities import qiniu_upload_img
 
 
@@ -29,14 +29,14 @@ class ProfileHandler(UserHandler):
                 logging.error('删除用户：{}头像时出错！'.format(user.uid))
 
     def get(self, uid):
-        user = models.User.find_first('where uid=? and status=0', uid)
+        user = User.find_first('where uid=? and status=0', uid)
         self.render('profile.html', user=user, uid=uid)
 
     def post(self, uid):
         """
         更新用户信息（暂时只做了上传头像）
         """
-        user = models.User.find_first('where uid=? and status=0', uid)
+        user = User.find_first('where uid=? and status=0', uid)
         if not user:
             self.write_fail(message=u'用户不存在')
         img_info = self.request.files['filearg'][0]

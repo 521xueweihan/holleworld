@@ -7,7 +7,7 @@
 #   Desc    :   文章模块
 import markdown2
 
-from model import models
+from model.models import Article, User
 from app import BaseHandler, AdminHandler
 from utilities import tool
 
@@ -17,16 +17,25 @@ class ShowArticlesHandler(BaseHandler):
     展示文章列表
     """
     def get(self):
-        articles_list = models.Article.find_by("""where status=0
-                                               order by create_time desc""")
-
+        # 一页二十条
+        page = int(self.get_argument('page', 1))
+        total = Article.count_by('where status=0')
+        articles_list = Article.find_by(
+            """where status=0 order by create_time desc limit ?, ?""",
+            (page-1)*20, page*20
+        )
+        has_more = total > page*20
         for fi_article in articles_list:
             fi_article['id'] = self._warp_id(fi_article['id'])
-            user = models.User.find_first(
-                'where uid=? and status=0', fi_article['author_id'])
+            user = User.find_first(
+                'where uid=? and status=0', fi_article['author_id']
+            )
             fi_article['author'] = user
             fi_article['show_source_url'] = fi_article.source_url.split('://')[1]
-        self.render('article_list.html', articles_list=articles_list)
+            # 原文地址只展示host
+            fi_article['show_source_url'] = fi_article['show_source_url'].split('/')[0]
+        self.render('article_list.html', articles_list=articles_list,
+                    has_more=has_more, page=page)
  
 
 class ReadArticleHandler(BaseHandler):
@@ -36,7 +45,7 @@ class ReadArticleHandler(BaseHandler):
     def get(self, article_id):
         article_warp_id = article_id
         article_id = self._unwarp_id(article_id)
-        article = models.Article.find_first('where id=? and status=0', article_id)
+        article = Article.find_first('where id=? and status=0', article_id)
         article['article_warp_id'] = article_warp_id
         if article:
             ## TODO:不能刷！
@@ -53,7 +62,7 @@ class ReadArticleHandler(BaseHandler):
                     safe_mode='escape'
                 )
             )
-            article.author = models.User.find_first(
+            article.author = User.find_first(
                 'where uid=? and status=0', article.author_id)
             # 对文章内容中的单词增加样式
             article.content = tool.make_content(article.content)
@@ -90,7 +99,7 @@ class PostArticleHandler(AdminHandler):
         content = self.get_argument('content')
         update_time = self.now()
         create_time = self.now()
-        article = models.Article(
+        article = Article(
             author_id=author_id, last_editor_id=last_editor_id, title=title,
             zh_title=zh_title, content=content, source_url=source_url,
             create_time=create_time, update_time=update_time
@@ -106,7 +115,7 @@ class EditArticleHandler(AdminHandler):
     def get(self, article_id):
         article_warp_id = article_id
         article_id = self._unwarp_id(article_id)
-        article = models.Article.find_first(
+        article = Article.find_first(
             'where id=? and status=0', article_id)
         if article:
             data = {
@@ -126,12 +135,11 @@ class EditArticleHandler(AdminHandler):
         content = self.get_argument('content', None)
         update_time = self.now()
         article_id = self._unwarp_id(article_id)
-        article = models.Article.find_first(
-            'where id=? and status=0', article_id)
+        article = Article.find_first('where id=? and status=0', article_id)
         if not article:
             self.write_fail(message=u'文章不存在')
         elif article.author_id == self.get_user.get('uid') \
-             or self.get_user.get('admin', 0) > 1:
+            or self.get_user.get('admin', 0) > 1:
             article.last_editor_id = last_editor_id
             article.title = title
             article.zh_title = zh_title
@@ -150,8 +158,7 @@ class DeleteArticleHandler(AdminHandler):
     """
     def post(self, article_id):
         article_id = self._unwarp_id(article_id)
-        article = models.Article.find_first(
-            'where id=? and status=0', article_id)
+        article = Article.find_first('where id=? and status=0', article_id)
         if not article:
             self.write_fail(message=u'文章不存在')
         elif article.author_id == self.get_user.get('uid') \

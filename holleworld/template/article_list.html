@@ -20,7 +20,7 @@
       </div>
 
       <div class="media-body">
-        <h5 class="media-heading"><a href="/article/read/{{article.id}}" style="color: #000000">{{i+1}}. {{article.title}}</a></h5>
+        <h5 class="media-heading"><a href="/article/read/{{ article.id }}" style="color: #000000">{{ (page-1)*20+i+1 }}. {{article.title}}</a></h5>
         <span style="color: #828282;"><a target="_blank" href="{{ article.source_url }}" style="color: #828282"> • {{ article.show_source_url }}</a> • {{ article.author.name }} • {{ article.zh_title }} • {{ article.create_time }}</span>
       </div>
 
@@ -31,4 +31,14 @@
       </div>
     </div>
 {% end %}
+    <nav>
+        <ul class="pager">
+            {% if page-1 != 0 %}
+                <li class="holle-world-index"><a href="/article/list?page={{ page-1 }}">上一页️</a></li>
+            {% end %}
+            {% if has_more %}
+                <li class="holle-world-index"><a href="/article/list?page={{ page+1 }}">下一页</a></li>
+            {% end %}
+        </ul>
+    </nav>
 {% end %}

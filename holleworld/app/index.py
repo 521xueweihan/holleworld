@@ -10,7 +10,7 @@ import os
 import uuid
 
 from app import BaseHandler, UserHandler
-from model import models
+from model.models import User, Code
 from utilities import tool, qiniu_upload_img
 
 
@@ -23,18 +23,13 @@ class LoginHandler(BaseHandler):
         """
         验证用户，支持邮箱和用户名登陆
         """
-        user = models.User.find_first('where email=? and password=?',
-                                      user_name, password) or \
-               models.User.find_first('where name=? and password=?',
-                                      user_name, password)
+        user = User.find_first('where email=? and password=?', user_name, password) or \
+               User.find_first('where name=? and password=?', user_name, password)
         return user
 
     def get(self):
         # log记录访问者的ip
         logging.info('{}！'.format(self.request.remote_ip))
-        # 修改规则：登录状态下的用户可以访问首页
-        # if self.get_user:
-        #     self.redirect('/article/list')
         self.render('index.html')
 
     def post(self):
@@ -62,9 +57,9 @@ class SignHandler(BaseHandler):
         """
         if not code:
             return False
-        _code = models.Code.find_first('where code=? and status=0', code)
+        _code = Code.find_first('where code=? and status=0', code)
         if _code:
-            code_obj = models.Code.get(_code.id)
+            code_obj = Code.get(_code.id)
             return code_obj
         else:
             return False
@@ -85,7 +80,7 @@ class SignHandler(BaseHandler):
         if not code_obj:
             self.write_fail(message=u'邀请码错误')
 
-        u = models.User(email=email, name=name, password=password)
+        u = User(email=email, name=name, password=password)
         try:
             u.insert()
             # 注册成功，该邀请码失效
@@ -105,7 +100,7 @@ class CheckoutNameHandler(BaseHandler):
         name = self.get_argument('name', None)
 
         if tool.check_arg(name):
-            if models.User.find_first('where name=? and status=0', name):
+            if User.find_first('where name=? and status=0', name):
                 self.write_fail(message=u'抱歉，用户名已被占用')
         else:
             self.write_fail(message=u'用户名含有非法字符')
@@ -120,7 +115,7 @@ class CheckoutEmailHandler(BaseHandler):
         email = self.get_argument('email', None)
 
         if tool.check_arg(email):
-            if models.User.find_first('where email=? and status=0', email):
+            if User.find_first('where email=? and status=0', email):
                 self.write_fail(message=u'抱歉，邮箱已被占用')
         else:
             self.write_fail(message=u'邮箱含有非法字符')
@@ -146,7 +141,7 @@ class TestHandler(BaseHandler):
 
     def post(self):
         uid = self.get_argument('uid')
-        user = models.User.find_first('where uid=? and status=0', uid)
+        user = User.find_first('where uid=? and status=0', uid)
         if not user:
             self.write_fail(message=u'用户不存在')
         img_info = self.request.files['filearg'][0]
