@@ -9,7 +9,7 @@ import markdown2
 
 from model.models import Article, User
 from app import BaseHandler, AdminHandler
-from utilities import tool
+from utilities import tool, escape
 
 
 class ShowArticlesHandler(BaseHandler):
@@ -26,7 +26,7 @@ class ShowArticlesHandler(BaseHandler):
         )
         has_more = total > offset+count
         for fi_article in articles_list:
-            fi_article['id'] = self._warp_id(fi_article['id'])
+            fi_article['warp_id'] = self._warp_id(fi_article['id'])
             user = User.find_first(
                 'where uid=? and status=0', fi_article['author_id']
             )
@@ -40,13 +40,12 @@ class ShowArticlesHandler(BaseHandler):
 
 class ReadArticleHandler(BaseHandler):
     """
-    阅读文章
+    阅读文章(注意该页面关闭了自动转义，所以需要手动转义)
     """
     def get(self, article_id):
         article_warp_id = article_id
         article_id = self._unwarp_id(article_id)
         article = Article.find_first('where id=? and status=0', article_id)
-        article['article_warp_id'] = article_warp_id
         if article:
             ## TODO:不能刷！
             # 阅读数＋1
@@ -62,15 +61,21 @@ class ReadArticleHandler(BaseHandler):
                     safe_mode='escape'
                 )
             )
+            article['warp_id'] = article_warp_id
             article.author = User.find_first(
                 'where uid=? and status=0', article.author_id)
+            article.author.name = escape.html_escape(article.author.name)
+            article['show_title'] = escape.html_escape(article['title'])
+            article['show_zh_title'] = escape.html_escape(article['zh_title'])
+
+
             # 对文章内容中的单词增加样式
             article.content = tool.make_content(article.content)
             # 判断权限是否有编辑以及删除功能
             # 作者以及管理员有编辑权限
             user_power = self.get_user.get('admin', None)
             if user_power == 1 and \
-               self.get_user.get('uid') == article.author_id:
+                            self.get_user.get('uid') == article.author_id:
                 article.can_edit = True
             elif self.get_user.get('admin', None) > 1:
                 article.can_edit = True

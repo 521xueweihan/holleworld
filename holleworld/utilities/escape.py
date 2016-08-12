@@ -26,6 +26,8 @@ def html_escape(s):
         s = s.replace("&", "&amp;") # Must be done first!
         s = s.replace("<", "&lt;")
         s = s.replace(">", "&gt;")
+        s = s.replace("(", "&#40;")
+        s = s.replace(")", "&#41;")
         return s
     else:
         return None

@@ -40,17 +40,18 @@
 
 {% block content %}
 {% autoescape None %}
+
     <div id="translation">
         <div id="translation-head"></div>
         <div id="translation-body"></div>
     </div>
-
+    <h3 id="article_title">标题：{{ show_title }}</h3>
     <article class="markdown-body">
         {{ content }}
     </article>
     {% if can_edit %}
-        <a href="/article/edit/{{ article_warp_id }}">编辑</a>
-        <a href="javascript:void(0)" onclick="return delete_post('{{ article_warp_id}}', '{{ title }}')">删除</a>
+        <a href="/article/edit/{{ warp_id }}">编辑</a>
+        <a href="javascript:void(0)" onclick="return delete_post('{{ warp_id }}')">删除</a>
     {% end %}
 {% end %}
 
@@ -58,8 +59,9 @@
 <script src="{{ static_url('js/highlight.pack.js') }}"></script>
 <script src="{{ static_url('js/translate.js') }}"></script>
 <script>
-function delete_post(article_id, title) {
-    if(confirm("确认删除“"+title+"”吗？")){
+function delete_post(article_id) {
+    var show_title = $('#article_title').text();
+    if(confirm("确认删除“"+show_title+"”吗？")){
         $.ajax({
             type:'POST',
             url: '/article/delete/' + article_id,
