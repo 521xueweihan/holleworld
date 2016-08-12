@@ -10,7 +10,7 @@ import uuid
 import logging
 
 from app import UserHandler
-from model.models import User
+from model.models import User, Article
 from utilities import qiniu_upload_img
 
 
@@ -30,7 +30,21 @@ class ProfileHandler(UserHandler):
 
     def get(self, uid):
         user = User.find_first('where uid=? and status=0', uid)
-        self.render('profile.html', user=user, uid=uid)
+        page = int(self.get_argument('page', 1))
+        total = Article.count_by('where author_id=? and status=0', user.uid)
+        offset, count = self.offset(page)
+        articles_list = Article.find_by(
+            """where author_id=? and status=0
+            order by create_time desc limit ?, ?""", user.uid, offset, count
+        )
+        has_more = total > offset+count
+        for fi_article in articles_list:
+            fi_article['warp_id'] = self._warp_id(fi_article['id'])
+            fi_article['show_source_url'] = fi_article.source_url.split('://')[1]
+            # 原文地址只展示host
+            fi_article['show_source_url'] = fi_article['show_source_url'].split('/')[0]
+        self.render('profile.html', articles_list=articles_list, uid=uid,
+                    has_more=has_more, page=page, count=count, user=user)
 
     def post(self, uid):
         """
