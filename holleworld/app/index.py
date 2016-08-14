@@ -23,6 +23,7 @@ class LoginHandler(BaseHandler):
         """
         验证用户，支持邮箱和用户名登陆
         """
+        password = tool.encrypt_password(password)
         user = User.find_first('where email=? and password=?', user_name, password) or \
                User.find_first('where name=? and password=?', user_name, password)
         return user
@@ -80,6 +81,8 @@ class SignHandler(BaseHandler):
         if not code_obj:
             self.write_fail(message=u'邀请码错误')
 
+        # 用户密码的hash字符串
+        password = tool.encrypt_password(password)
         u = User(email=email, name=name, password=password)
         try:
             u.insert()

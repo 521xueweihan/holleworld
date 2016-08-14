@@ -27,7 +27,7 @@ class User(Model):
     uid = IntegerField(default=db.next_id(), updatable=False, ddl='bigint(20)')
     email = StringField(ddl='varchar(50)')
     name = StringField(ddl='varchar(50)')
-    password = StringField(ddl='varchar(10)')
+    password = StringField(ddl='varchar(500)')
     avatar = StringField(ddl='varchar(500)')
     admin = IntegerField(ddl='tinyint(4)', default=0)
     create_time = TimeField()

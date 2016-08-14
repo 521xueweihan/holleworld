@@ -6,8 +6,36 @@
 #   Date    :   16/4/5 下午10:56
 #   Desc    :   一些工具方法
 import re
+import os
+from hashlib import sha256
+from hmac import HMAC
 
 from bs4 import BeautifulSoup
+
+
+def encrypt_password(password, salt=None):
+    """加密用户密码"""
+    if salt is None:
+        salt = os.urandom(8)  # 64bits.
+
+    assert 8 == len(salt)
+    assert isinstance(salt, str)
+
+    if isinstance(password, unicode):
+        password = password.encode('UTF-8')
+
+    assert isinstance(password, str)
+
+    result = password
+    for i in xrange(10):
+        result = HMAC(result, salt, sha256).digest()
+
+    return salt + result
+
+
+def check_password(hashed, input_password):
+    """验证用户密码"""
+    return hashed == encrypt_password(input_password, salt=hashed[:8])
 
 
 def insert_class(soup, tag):
