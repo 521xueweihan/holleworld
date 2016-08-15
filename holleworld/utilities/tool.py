@@ -6,7 +6,7 @@
 #   Date    :   16/4/5 下午10:56
 #   Desc    :   一些工具方法
 import re
-import os
+import random
 from hashlib import sha256
 from hmac import HMAC
 
@@ -16,9 +16,14 @@ from bs4 import BeautifulSoup
 def encrypt_password(password, salt=None):
     """加密用户密码"""
     if salt is None:
-        salt = os.urandom(8)  # 64bits.
+        chars = 'qwertyuioplkjhgfdsazxcvbnm0123456789'
+        salt = ''.join(random.sample(chars, 8))
 
     assert 8 == len(salt)
+
+    if isinstance(salt, unicode):
+        salt = salt.encode('UTF-8')
+
     assert isinstance(salt, str)
 
     if isinstance(password, unicode):
@@ -28,7 +33,7 @@ def encrypt_password(password, salt=None):
 
     result = password
     for i in xrange(10):
-        result = HMAC(result, salt, sha256).digest()
+        result = HMAC(result, salt, sha256).hexdigest()
 
     return salt + result
 

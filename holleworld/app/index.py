@@ -23,10 +23,16 @@ class LoginHandler(BaseHandler):
         """
         验证用户，支持邮箱和用户名登陆
         """
-        password = tool.encrypt_password(password)
-        user = User.find_first('where email=? and password=?', user_name, password) or \
-               User.find_first('where name=? and password=?', user_name, password)
-        return user
+        user = User.find_first('where email=?', user_name) or \
+               User.find_first('where name=?', user_name)
+
+        if not user:
+            return None
+        else:
+            if tool.check_password(user.password, password):
+                return user
+            else:
+                return None
 
     def get(self):
         # log记录访问者的ip
