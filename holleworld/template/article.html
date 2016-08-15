@@ -59,12 +59,18 @@
 <script src="{{ static_url('js/highlight.pack.js') }}"></script>
 <script src="{{ static_url('js/translate.js') }}"></script>
 <script>
+function getCookie(name) {
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : undefined;
+}
+
 function delete_post(article_id) {
     var show_title = $('#article_title').text();
     if(confirm("确认删除“"+show_title+"”吗？")){
         $.ajax({
             type:'POST',
             url: '/article/delete/' + article_id,
+            data: {'_xsrf': getCookie("_xsrf")},
             success:function(data) {
                alert('删除成功！');
                window.location.href = '/article/list';
