@@ -11,6 +11,7 @@
     <a href=""><div id="back">返回</div></a>
     <div id="layout">
         <form id="edit-form" action="{{ path }}">
+            {% module xsrf_form_html() %}
             <div style="width:90%;margin: 10px auto;">
                 <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
                 <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
@@ -38,7 +39,10 @@
                 path    : "{{ static_url('editor.md/lib/') }}"
             });
         });
-
+        function getCookie(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        }
         // 提交表单
         $("#edit-form").on('submit', function (e) {
             e.preventDefault();

@@ -12,6 +12,7 @@
 
 {% block content %}
     <form enctype="multipart/form-data" id="form1">
+        {% module xsrf_form_html() %}
         头像：<a href="javascript:void(0)" onclick="return click_avatar()"><img id="avatar_img" src="{{ user.avatar }}" onError="this.src='{{ static_url('default_avatar.jpg') }}';" width="64px" alt="defult"></a><br>
         <br>
         用户名：{{ user.name }}<br>
