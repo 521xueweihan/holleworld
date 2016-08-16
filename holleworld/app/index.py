@@ -103,7 +103,7 @@ class SignHandler(BaseHandler):
 
 class CheckoutNameHandler(BaseHandler):
     """
-    检查注册时输入的name
+    检查注册时输入的name(因该改成get）
     """
     def post(self):
         name = self.get_argument('name', None)
@@ -118,7 +118,7 @@ class CheckoutNameHandler(BaseHandler):
 
 class CheckoutEmailHandler(BaseHandler):
     """
-    检查注册时输入的email
+    检查注册时输入的email（因该改成get）
     """
     def post(self):
         email = self.get_argument('email', None)
