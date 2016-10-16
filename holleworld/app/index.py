@@ -145,8 +145,7 @@ class TestHandler(BaseHandler):
     用于练习一些功能
     """
     def get(self):
-        self.render('upload_pic.html')
-        # self.render('test.html')
+        self.render('test.html')
 
     def post(self):
         uid = self.get_argument('uid')

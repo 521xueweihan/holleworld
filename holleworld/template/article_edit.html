@@ -3,46 +3,37 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ static_url('css/edit.css') }}" />
-    <link rel="stylesheet" href="{{ static_url('editor.md/css/editormd.css') }}" />
+    	<link rel="stylesheet" type="text/css" href="{{ static_url('css/stylesheet.css') }}" media="screen">
+    	<link rel="stylesheet" type="text/css" href="{{ static_url('css/github-light.css') }}" media="screen">
+
     <link rel="icon" href="{{ static_url('favicon.ico') }}">
 </head>
 <body>
-    <a href=""><div id="back">返回</div></a>
-    <div id="layout">
+    <a href=""><div id="back" align="center">返回</div></a>
+    <section class="main-content">
         <form id="edit-form" action="{{ path }}">
             {% module xsrf_form_html() %}
-            <div style="width:90%;margin: 10px auto;">
-                <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
-                <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
-                <label>原文链接：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
-            </div>
-            <div id="test-editormd">
-                <textarea name="content" style="display:none;">
-                    {{ article and article['content'] or ''}}
-                </textarea>
-            </div>
-            <div style="width:90%;margin: 10px auto;">
-                <input type="submit" name="submit" value="发布" style="padding: 5px;"/>
-            </div>
+            <label>标题：</label><input type="text" name="title" value="{{ article and article['title'] or '' }}"><br>
+            <label>中文标题：</label><input type="text" name="zh_title" value="{{ article and article['zh_title'] or '' }}"><br>
+            <label>原文链接：</label><input type="text" name="source_url" value="{{ article and article['source_url'] or '' }}"><br>
+            <textarea id="editor" name="content">
+                {{ article and article['content'] or ''}}
+            </textarea>
+            <input type="submit" name="submit" value="发布" style="padding: 5px;"/>
         </form>
-    </div>
+    </section>
+    <link rel="stylesheet" href="{{ static_url('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ static_url('css/samplemde.min.css') }}" />
     <script src="{{ static_url('js/jquery-1.11.3.min.js') }}"></script>
-    <script src="{{ static_url('js/editormd.min.js') }}"></script>
+    <script src="{{ static_url('js/samplemde.min.js') }}"></script>
+
     <script type="text/javascript">
-        var testEditor;
-        $(function() {
-            testEditor = editormd("test-editormd", {
-                width   : "90%",
-                height  : 640,
-                syncScrolling : "single",
-                path    : "{{ static_url('editor.md/lib/') }}"
-            });
-        });
-        function getCookie(name) {
-            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-            return r ? r[1] : undefined;
-        }
+        // markdown编辑器
+        new SimpleMDE({
+		element: document.getElementById("editor"),
+		spellChecker: false
+	    });
+
         // 提交表单
         $("#edit-form").on('submit', function (e) {
             e.preventDefault();
