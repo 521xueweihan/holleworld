@@ -93,7 +93,7 @@ class BaseHandler(RequestHandler):
     def session(self, value):
         if isinstance(value, dict):
             value = json.dumps(value)
-        self.set_secure_cookie(self._SESSION_COOKIE_KEY, value)
+        self.set_secure_cookie(self._SESSION_COOKIE_KEY, value,  expires_days=1)
 
     @session.deleter
     def session(self):
