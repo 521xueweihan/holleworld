@@ -20,7 +20,7 @@ TODO
 TODO
 
 ## 五、开源许可
-基于 MIT License 开源，使用代码只需说明来源，或者引用 [license.txt](https://github.com/521xueweihan/PyHub/blob/master/LICENSE) 即可。
+基于 MIT License 开源，使用代码只需说明来源，或者引用 [license.txt](https://github.com/521xueweihan/holleworld/blob/master/LICENSE) 即可。
 
 MIT是和BSD一样宽松的许可协议,作者只想保留版权,而无任何其他了限制.也就是说,你必须在你的发行版里包含原许可协议的声明,无论你是以二进制发布的还是以源代码发布的。
 
